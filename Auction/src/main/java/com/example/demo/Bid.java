@@ -5,4 +5,5 @@ public class Bid {
     private User bidder;
     private Item item;
     private int price;
+    private int adrian;
 }
