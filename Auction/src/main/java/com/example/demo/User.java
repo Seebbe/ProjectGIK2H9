@@ -1,11 +1,12 @@
 package com.example.demo;
 
 public class User {
-    String name;
+    private int id;
+    private String name;
+    private String email;
+    private String password;
+    private String role;
 
-    String hejhalå;
-
-    String password;
-    int number;
+ 
 
 }
