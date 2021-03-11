@@ -6,5 +6,6 @@ public class User {
     String hejhalå;
 
     String password;
+    int number;
 
 }
