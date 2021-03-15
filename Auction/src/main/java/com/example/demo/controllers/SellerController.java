@@ -40,29 +40,12 @@ public class SellerController {
         int enabled = 1;
 
         Item item = new Item(name,description,Integer.parseInt(startingprice),endtime,enabled,picture);
-        List<User> users = (List<User>) userRepository.findAll();
-        System.out.println(name);
-        //Find the user that adds the blog
-        System.out.println(description);
-        System.out.println(startingprice);
-
-        System.out.println(endtime);
-
-        System.out.println(enabled);
-        System.out.println(picture);
-        //User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser("admin"));
 
 
-        for(User a:users){
-            System.out.println(a.getName());
-            if(a.getName().equals("Adminsson")){
-                item.setUser(a);
-                a.addItem(item);
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser("seller"));
+        loggedInUser.addItem(item);
+        itemRepository.save(item);
 
-                itemRepository.save(item);
-                break;
-            }
-        }
 
 
         return "redirect:/seller";
