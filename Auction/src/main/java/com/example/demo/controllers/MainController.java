@@ -23,12 +23,14 @@ public class MainController {
     userRepository.save(u1);
     userRepository.save(u2);
     userRepository.save(u3);
+
+
     //PASSWORD = 123
     //return "test";
 
 }
 
-    public static String getLoggedInUser(String role){
+    public static String getLoggedInUser(){
         String userName = "";
         /*Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
@@ -39,16 +41,8 @@ public class MainController {
 
          */
 
-        //hårdkodar en användare
-
-        if (role.equals("admin"))
-            userName = "admin@admin.se";
-
-        if (role.equals("seller"))
+        //hårdkodar en user som returneras
             userName =  "seller@user.com";
-
-        if (role.equals("bidder"))
-            userName = "bidder@user2.com";
 
         return userName;
     }

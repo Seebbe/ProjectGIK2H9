@@ -31,7 +31,7 @@ public class SellerController {
         Item a1 = new Item("aa","awdawdadawdawdadada",20,"20:00",1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
         Item a2 = new Item("bb","bbbbbbbbbbbbbbbb",20,"20:00",1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
         Item a3 = new Item("bb","aaaaaaaaaaaaaaaaaa",20,"20:00",1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser("seller"));
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         loggedInUser.addItem(a1);
         itemRepository.save(a1);
         loggedInUser.addItem(a2);
@@ -53,7 +53,7 @@ public class SellerController {
         Item item = new Item(name,description,Integer.parseInt(startingprice),endtime,enabled,picture);
 
 
-        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser("seller"));
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         loggedInUser.addItem(item);
         itemRepository.save(item);
 
