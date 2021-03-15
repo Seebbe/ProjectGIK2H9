@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Calendar;
@@ -68,12 +66,32 @@ public class SellerController {
 
 
 
-        return "redirect:/seller";
+        return "redirect:/seller/add";
     }
 
     @GetMapping("")
     public String index() {
         return "test";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteItem(@PathVariable Integer id) {
+        itemRepository.deleteById(id);
+        return "redirect:/seller/add";
+    }
+    @GetMapping("/updateitem")
+    public String updateItem(@RequestParam(defaultValue = "-1") String name,
+                             @RequestParam(defaultValue = "-1") String description,
+                             @RequestParam(defaultValue = "-1") String startingBid,
+                             @RequestParam(defaultValue = "-1") String picture,
+                             @RequestParam(defaultValue = "-1") String id) {
+        System.out.println(name);
+        System.out.println(description);
+        System.out.println(startingBid);
+        System.out.println(picture);
+        System.out.println(id);
+        itemRepository.updateItem(name,description,Integer.parseInt(startingBid),picture,Integer.parseInt(id));
+
+        return "redirect:/seller/add";
     }
 
 }

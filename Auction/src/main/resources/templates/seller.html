@@ -44,49 +44,35 @@
                         <span th:unless="${i.auctionHasEnded}" class="alert-success">Auktionen är aktiv</span>
 
                         <p class="card-text" th:text="'Starting Price: '+${i.startingBid}"></p>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle"style="margin-top: 10px;margin-bottom: 10px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Update Comment
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
+                                <form action="/seller/updateitem" method="get" style="margin-left: 10px">
+                                    <input type="text" id="id" name="id" th:value="${i.id}" hidden><br>
+                                    <label for="name" >Name:</label><br>
+                                    <input type="text" id="name" name="name" th:value="${i.name}"><br>
 
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                            Update Auktion
-                        </button>
+                                    <label for="startingBid" >Starting price:</label><br>
+                                    <input type="text" id="startingBid" name="startingBid" th:value="${i.startingBid}"><br>
+                                    <label for="picture" >Picture URL:</label><br>
+                                    <input type="text" id="picture" name="picture" th:value="${i.picture}"><br>
+                                    <label for="picture" >Description:</label><br>
+                                    <textarea rows="4" cols="30" id="description" name="description" style="margin-top: 2%" th:text="${i.description}"></textarea>
+                                    </textarea>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Update Auktion</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="/seller/addauktion" method="get">
-                                            <label for="name" >Name:</label><br>
-                                            <input type="text" id="name" name="name"><br>
-                                            <label for="endtime" >Endtime for auktion:</label><br>
-                                            <input type="text" id="endtime" name="endtime"><br>
-                                            <label for="startingprice" >Starting price:</label><br>
-                                            <input type="text" id="startingprice" name="startingprice"><br>
-                                            <label for="picture" >Picture URL:</label><br>
-                                            <input type="text" id="picture" name="picture"><br>
-
-                                            <textarea rows="4" cols="30" id="description" name="description" style="margin-top: 2%" placeholder="Description"></textarea>
-                                            </textarea>
-
-
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button class="btn btn-primary" type="submit" value="Submit">Save</button>
-                                        </form>
-                                    </div>
-                                </div>
+                                    <input type="submit" value="Submit">
+                                </form>
                             </div>
+
                         </div>
-                        <a href="#" class="btn btn-danger">Delete</a>
+
+
+
+
+                        <a th:href="@{'/seller/delete/' + ${i.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
 
                     </div>
                 </div>
