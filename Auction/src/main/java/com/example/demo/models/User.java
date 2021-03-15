@@ -27,8 +27,8 @@ public class User {
     public List<Item> items = new ArrayList<>();
 
     public void addItem(Item item){
-        items.add(item);
         item.setUser(this);
+        items.add(item);
     }
     //Relation to Bids
     @OneToMany(
@@ -37,6 +37,7 @@ public class User {
     orphanRemoval = true
     )
     public List<Bid> bids =new ArrayList<>();
+
     public void addBid(Bid bid){
         bids.add(bid);
         bid.setUser(this);
@@ -124,17 +125,4 @@ public class User {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", enabled=" + enabled +
-                ", description='" + description + '\'' +
-                ", items=" + items +
-                ", bids=" + bids +
-                '}';
-    }
 }

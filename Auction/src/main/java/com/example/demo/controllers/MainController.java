@@ -1,9 +1,13 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Bid;
 import com.example.demo.models.Category;
+import com.example.demo.models.Item;
 import com.example.demo.models.User;
 import com.example.demo.repositories.CategoryRepository;
+import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
+import org.jboss.jandex.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -11,6 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Calendar;
+import java.util.Date;
 
 @Controller
 public class MainController {
@@ -18,33 +26,40 @@ public class MainController {
     private UserRepository userRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     @EventListener(ApplicationReadyEvent.class)
-    public void runOnStart(){
+    public void runOnStart() {
         //Skapar upp användare
-    User u1 = new User("Adminsson","admin@admin.se","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","Cool snubbe","ROLE_ADMIN");
-    User u2 = new User("En säljare","seller@user.com","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","Säljer som smör","ROLE_SELLER");
-    User u3 = new User("En budare","bidder@user2.com","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","Han köper allt","ROLE_BIDDER");
-    userRepository.save(u1);
-    userRepository.save(u2);
-    userRepository.save(u3);
-        Category c1 = new Category("Teknik","Allting om teknik");
-        Category c2 = new Category("Bilar","Allting om bilar");
-        Category c3 = new Category("Hem","Allting om hem");
-        Category c4 = new Category("Hobby","Allting om hobby");
-    categoryRepository.save(c1);
-    categoryRepository.save(c2);
-    categoryRepository.save(c3);
-    categoryRepository.save(c4);
-    //PASSWORD = 123
-    //return "test";
+        User u1 = new User("Adminsson", "admin@admin.se", "$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe", "Cool snubbe", "ROLE_ADMIN");
+        User u2 = new User("En säljare", "seller@user.com", "$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe", "Säljer som smör", "ROLE_SELLER");
+        User u3 = new User("En budare", "bidder@user2.com", "$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe", "Han köper allt", "ROLE_BIDDER");
+        userRepository.save(u1);
+        Item a4 = new Item("bb", "Vill någon köpa mä?", 25, new Date(), 1, "https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
+
+        userRepository.save(u3);
+        Category c1 = new Category("Teknik", "Allting om teknik");
+        Category c2 = new Category("Bilar", "Allting om bilar");
+        Category c3 = new Category("Hem", "Allting om hem");
+        Category c4 = new Category("Hobby", "Allting om hobby");
+        categoryRepository.save(c1);
+        categoryRepository.save(c2);
+        categoryRepository.save(c3);
+        categoryRepository.save(c4);
+        //PASSWORD = 123
+        //return "test";
+        a4.setCategory(c1);
+        u2.addItem(a4);
+        userRepository.save(u2);
     }
+
     @GetMapping(value = "/Itemsite")
-        public String GetItemSite() {
+    public String GetItemSite() {
         return "Item";
     }
 
-    public static String getLoggedInUser(){
+    public static String getLoggedInUser() {
         String userName = "";
         /*Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
@@ -56,8 +71,18 @@ public class MainController {
          */
 
         //hårdkodar en user som returneras
-            userName =  "seller@user.com";
+        userName = "seller@user.com";
 
         return userName;
+    }
+
+    //Singelsida för ett auktionsobjekt
+    @GetMapping("/auctionitem")
+    public String getSingleItemPage(Model model, @RequestParam(name = "id") Integer id) {
+        System.out.println(id);
+        System.out.println(itemRepository.findById(id).get());
+        model.addAttribute("item", itemRepository.findById(id).get());
+
+        return "singleitem";
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Bid {
@@ -26,6 +27,9 @@ public class Bid {
 
     private Integer price;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -49,6 +53,13 @@ public class Bid {
     }
 
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public int getPrice() {
         return price;
@@ -58,4 +69,14 @@ public class Bid {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Bid{" +
+                "id=" + id +
+                ", price=" + price +
+                ", date=" + date +
+                ", user=" + user +
+                ", item=" + item +
+                '}';
+    }
 }

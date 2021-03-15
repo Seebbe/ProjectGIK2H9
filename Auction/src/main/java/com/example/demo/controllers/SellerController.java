@@ -42,9 +42,6 @@ public class SellerController {
         category.addItem(a3);
         category.addItem(a4);
 
-
-
-
         //ändrar datumet till ett datum som gått ut
         a4.setEndTime(Calendar.getInstance().getTime());
 
@@ -89,10 +86,6 @@ public class SellerController {
                 itemRepository.save(item);
             }
         }
-
-
-
-
 
         return "redirect:/seller/add";
     }

@@ -49,8 +49,8 @@ public class Item {
     private User user;
 
     public Item(){
-
     }
+
     public Item(String name,String description,int startingBid, Date endtime,int enabled,String picture){
         this.name=name;
         this.description=description;
@@ -61,7 +61,6 @@ public class Item {
         this.endTime=cNow.getTime();
         this.enabled=enabled;
         this.picture=picture;
-
     }
 
     public void setId(Integer id) {
@@ -166,5 +165,20 @@ public class Item {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = simpleDateFormat.format(this.endTime);
         return formattedDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", startingBid=" + startingBid +
+                ", endTime=" + endTime +
+                ", enabled=" + enabled +
+                ", picture='" + picture + '\'' +
+                ", category=" + category +
+                ", user=" + user +
+                '}';
     }
 }

@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Category;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
+import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class AdminController {
 
     @Autowired
     ItemRepository itemRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     //Hämtar alla items/users till adminsidan
     @GetMapping("")
@@ -55,8 +60,10 @@ public class AdminController {
                              @RequestParam(defaultValue = "-1") String description,
                              @RequestParam(defaultValue = "-1") String startingBid,
                              @RequestParam(defaultValue = "-1") String picture,
-                             @RequestParam(defaultValue = "-1") String id) {
-        itemRepository.updateItems(name,description,Integer.parseInt(startingBid),picture,Integer.parseInt(id));
+                             @RequestParam(defaultValue = "-1") String id,
+                             @RequestParam(defaultValue = "-1") String category) {
+        Category category1 = categoryRepository.findByTitle(category);
+        itemRepository.updateItems(name,description,Integer.parseInt(startingBid),picture,category1,Integer.parseInt(id));
 
         return "redirect:/admin/";
     }
