@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,8 +31,8 @@ public class AdminController {
         model.addAttribute("meddelande", "Jag är en admin!");
         return "test";
     }
-
-    @GetMapping("/items")
+    //Hämtar alla items/users till adminsidan
+    @GetMapping("/adminView")
     public String GetAllItems(Model model, @RequestParam(required = false) Integer id){
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
@@ -40,5 +41,11 @@ public class AdminController {
         model.addAttribute("users", users);
 
         return "admin";
+    }
+
+    @GetMapping(value = "/deleteComment/{id}")
+    public String deleteComment(@PathVariable Integer id){
+        itemRepository.deleteById(id);
+        return "redirect:/adminView";
     }
 }
