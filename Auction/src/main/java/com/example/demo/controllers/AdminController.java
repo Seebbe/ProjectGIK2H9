@@ -36,19 +36,20 @@ public class AdminController {
     }
 
 
-
+    //Delete sektion
     @GetMapping(value = "/deleteItem/{id}")
     public String deleteItem(@PathVariable Integer id){
         itemRepository.deleteById(id);
-        return "redirect:/admin/adminView";
+        return "redirect:/admin/";
     }
 
     @GetMapping(value = "/deleteUser/{id}")
     public String deleteUser(@PathVariable Integer id){
         userRepository.deleteById(id);
-        return "redirect:/admin/adminView";
+        return "redirect:/admin/";
     }
 
+    //Update sektion
     @GetMapping("/updateitem")
     public String updateItem(@RequestParam(defaultValue = "-1") String name,
                              @RequestParam(defaultValue = "-1") String description,
@@ -57,7 +58,7 @@ public class AdminController {
                              @RequestParam(defaultValue = "-1") String id) {
         itemRepository.updateItem(name,description,Integer.parseInt(startingBid),picture,Integer.parseInt(id));
 
-        return "redirect:/admin/adminView";
+        return "redirect:/admin/";
     }
 
     @GetMapping("/updateUser")
@@ -67,6 +68,6 @@ public class AdminController {
                              @RequestParam(defaultValue = "-1") String id){
         userRepository.updateUser(name,email,description,Integer.parseInt(id));
 
-        return "redirect:/admin/adminView";
+        return "redirect:/admin/";
     }
 }
