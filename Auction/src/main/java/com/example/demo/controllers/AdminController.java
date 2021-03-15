@@ -16,7 +16,7 @@ public class AdminController {
 
     @GetMapping("")
     public String index(Model model) {
-        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser("admin"));
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         model.addAttribute("admin", loggedInUser);
         model.addAttribute("meddelande", "Jag är en admin!");
         return "test";

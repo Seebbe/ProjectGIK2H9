@@ -53,7 +53,7 @@ public class SellerController {
         Item item = new Item(name,description,Integer.parseInt(startingprice),endtime,enabled,picture);
 
 
-        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser("seller"));
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         loggedInUser.addItem(item);
         itemRepository.save(item);
 
