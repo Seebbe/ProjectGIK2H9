@@ -61,6 +61,7 @@ public class Item {
         this.endTime=cNow.getTime();
         this.enabled=enabled;
         this.picture=picture;
+
     }
 
     public void setId(Integer id) {

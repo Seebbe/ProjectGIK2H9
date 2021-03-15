@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Category;
 import com.example.demo.models.User;
+import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void runOnStart(){
@@ -24,8 +28,14 @@ public class MainController {
     userRepository.save(u1);
     userRepository.save(u2);
     userRepository.save(u3);
-
-
+        Category c1 = new Category("Teknik","Allting om teknik");
+        Category c2 = new Category("Bilar","Allting om bilar");
+        Category c3 = new Category("Hem","Allting om hem");
+        Category c4 = new Category("Hobby","Allting om hobby");
+    categoryRepository.save(c1);
+    categoryRepository.save(c2);
+    categoryRepository.save(c3);
+    categoryRepository.save(c4);
     //PASSWORD = 123
     //return "test";
     }

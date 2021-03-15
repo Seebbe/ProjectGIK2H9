@@ -12,6 +12,14 @@ public class Category {
     private String title;
     private String description;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     //Relation to Items
     @OneToMany(
             mappedBy ="category",
@@ -32,9 +40,7 @@ public class Category {
         this.description=description;
     }
 
-    public int getId() {
-        return id;
-    }
+
 
     public void setId(int id) {
         this.id = id;
