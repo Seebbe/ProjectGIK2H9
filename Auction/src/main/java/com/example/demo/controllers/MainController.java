@@ -15,7 +15,7 @@ public class MainController {
     private UserRepository userRepository;
 
     @EventListener(ApplicationReadyEvent.class)
-    public String runOnStart(Model model){
+    public void runOnStart(){
         //Skapar upp användare
     User u1 = new User("Admin","admin@admin.se","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","ROLE_ADMIN");
     User u2 = new User("User","user@user.com","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","ROLE_USER");
@@ -24,6 +24,6 @@ public class MainController {
     userRepository.save(u2);
     userRepository.save(u3);
     //PASSWORD = 123
-    return "test";
+    //return "test";
 }
 }
