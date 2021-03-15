@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="">
+<head th:replace="/fragments/head" xmlns:th="http://www.w3.org/1999/xhtml"></head>
+
+<body>
+
+<header th:replace="/fragments/header_"></header>
+
+<main>
+
+    <!-- Maincontent här-->
+    <div class="container">
+        <div class="row">
+            <h2>Users</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u: ${users}">
+                    <th scope="row"></th>
+                    <td th:text="${u.id}"></td>
+                    <td th:text="${u.name}"></td>
+                    <td th:text="${u.email}"></td>
+                    <td th:text="${u.description}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <h2>Items</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">StartingBid</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">End of auction</th>
+                    <th scope="col">Creator</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="i: ${items}">
+                    <th scope="row"></th>
+                    <td th:text="${i.id}"></td>
+                    <td th:text="${i.name}"></td>
+                    <td th:text="${i.startingBid}"></td>
+                    <td th:text="${i.description}"></td>
+                    <td th:text="${i.endTime}"></td>
+                    <td th:text="${i.user.mail}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div><br><br>
+    <!-- Maincontent här-->
+
+</main>
+
+<footer th:replace="/fragments/footer" xmlns:th="http://www.w3.org/1999/xhtml"></footer>
+
+</body>
+</html>

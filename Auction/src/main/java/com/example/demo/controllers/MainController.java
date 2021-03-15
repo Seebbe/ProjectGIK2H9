@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
@@ -25,8 +28,11 @@ public class MainController {
 
     //PASSWORD = 123
     //return "test";
-
-}
+    }
+    @GetMapping(value = "/Itemsite")
+        public String GetItemSite() {
+        return "Item";
+    }
 
     public static String getLoggedInUser(){
         String userName = "";
@@ -41,23 +47,6 @@ public class MainController {
 
         //hårdkodar en user som returneras
             userName =  "seller@user.com";
-
-        return userName;
-    }
-
-    public static String getLoggedInAdmin(){
-        String userName = "";
-        /*Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails)principal).getUsername();
-        } else {
-            userName = "-";
-        }
-
-         */
-
-        //hårdkodar en user som returneras
-        userName =  "admin@admin.se";
 
         return userName;
     }
