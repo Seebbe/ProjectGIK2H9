@@ -21,6 +21,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Description</th>
                         <th scope="col">Functions</th>
+                        <th scope="col"> </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,6 +31,27 @@
                         <td th:text="${u.email}"></td>
                         <td th:text="${u.description}"></td>
                         <td><a th:href="@{'/admin/deleteUser/' + ${u.id}}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+                        <td><div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Update User
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                    <form action="/admin/updateUser" method="get" style="margin-left: 10px">
+                                        <input type="text" id="id" name="id" th:value="${u.id}" hidden><br>
+                                        <label for="name" >Name:</label><br>
+                                        <input type="text" id="name" name="name" th:value="${u.name}"><br>
+
+                                        <label for="email" >Email:</label><br>
+                                        <input type="text" id="email" name="email" th:value="${u.email}"><br>
+                                        <label for="description" >Description:</label><br>
+                                        <textarea rows="4" cols="30" id="description" name="description" th:text="${u.description}"></textarea>
+
+                                        <input type="submit" value="Submit">
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -46,6 +68,7 @@
                         <th scope="col">End of auction</th>
                         <th scope="col">Creator</th>
                         <th scope="col">Functions</th>
+                        <th scope="col"> </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -57,6 +80,31 @@
                         <td th:text="${i.formattedDate}"></td>
                         <td th:text="${i.user.email}"></td>
                         <td><a th:href="@{'/admin/deleteItem/' + ${i.id}}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Update Comment
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                    <form action="/admin/updateitem" method="get" style="margin-left: 10px">
+                                        <input type="text" id="id" name="id" th:value="${i.id}" hidden><br>
+                                        <label for="name" >Name:</label><br>
+                                        <input type="text" id="name" name="name" th:value="${i.name}"><br>
+
+                                        <label for="startingBid" >Starting price:</label><br>
+                                        <input type="text" id="startingBid" name="startingBid" th:value="${i.startingBid}"><br>
+                                        <label for="picture" >Picture URL:</label><br>
+                                        <input type="text" id="picture" name="picture" th:value="${i.picture}"><br>
+                                        <label for="picture" >Description:</label><br>
+                                        <textarea rows="4" cols="30" id="description" name="description" th:text="${i.description}"></textarea>
+                                        </textarea>
+
+                                        <input type="submit" value="Submit">
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
