@@ -147,13 +147,13 @@ public class Item {
         this.picture = picture;
     }
 
-    public Boolean auctionIsEnded () {
+    public Boolean auctionHasEnded () {
         Date dateNow;
 
         Calendar c = Calendar.getInstance();
         dateNow = c.getTime();
 
-        if (dateNow.before(this.endTime)) {
+        if (dateNow.after(this.endTime)) {
             return true;
         }
         else {
