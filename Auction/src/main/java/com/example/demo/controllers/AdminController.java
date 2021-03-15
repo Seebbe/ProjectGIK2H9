@@ -7,12 +7,10 @@ import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/")
@@ -23,17 +21,11 @@ public class AdminController {
     @Autowired
     ItemRepository itemRepository;
 
-
+    //Hämtar alla items/users till adminsidan
     @GetMapping("")
-    public String index(Model model) {
+    public String index(Model model,@RequestParam(required = false) Integer id) {
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         model.addAttribute("admin", loggedInUser);
-        model.addAttribute("meddelande", "Jag är en admin!");
-        return "test";
-    }
-    //Hämtar alla items/users till adminsidan
-    @GetMapping("/adminView")
-    public String GetAllItems(Model model, @RequestParam(required = false) Integer id){
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
 
@@ -42,6 +34,8 @@ public class AdminController {
 
         return "admin";
     }
+
+
 
     @GetMapping(value = "/deleteItem/{id}")
     public String deleteItem(@PathVariable Integer id){
@@ -52,6 +46,27 @@ public class AdminController {
     @GetMapping(value = "/deleteUser/{id}")
     public String deleteUser(@PathVariable Integer id){
         userRepository.deleteById(id);
+        return "redirect:/admin/adminView";
+    }
+
+    @GetMapping("/updateitem")
+    public String updateItem(@RequestParam(defaultValue = "-1") String name,
+                             @RequestParam(defaultValue = "-1") String description,
+                             @RequestParam(defaultValue = "-1") String startingBid,
+                             @RequestParam(defaultValue = "-1") String picture,
+                             @RequestParam(defaultValue = "-1") String id) {
+        itemRepository.updateItem(name,description,Integer.parseInt(startingBid),picture,Integer.parseInt(id));
+
+        return "redirect:/admin/adminView";
+    }
+
+    @GetMapping("/updateUser")
+    public String updateUser(@RequestParam(defaultValue = "-1") String name,
+                             @RequestParam(defaultValue = "-1") String email,
+                             @RequestParam(defaultValue = "-1") String description,
+                             @RequestParam(defaultValue = "-1") String id){
+        userRepository.updateUser(name,email,description,Integer.parseInt(id));
+
         return "redirect:/admin/adminView";
     }
 }
