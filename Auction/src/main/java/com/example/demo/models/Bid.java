@@ -5,7 +5,7 @@ public class Bid {
     private User bidder;
     private Item item;
     private int price;
-    private int adrian;
+
 
     public int getId() {
         return id;
@@ -39,11 +39,4 @@ public class Bid {
         this.price = price;
     }
 
-    public int getAdrian() {
-        return adrian;
-    }
-
-    public void setAdrian(int adrian) {
-        this.adrian = adrian;
-    }
 }
