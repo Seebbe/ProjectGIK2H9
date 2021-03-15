@@ -39,9 +39,12 @@
 
                         <h5 class="card-title" th:text="'Created by: '+${i.user.email}">Card title</h5>
                         <p class="card-text" th:text="${i.description}"></p>
-
+                        <p class="card-text" th:text="'Avslutas: ' + ${i.getFormattedDate}"></p>
+                        <span th:if="${i.auctionIsEnded}">Auktionen är aktiv</span>
+                        <span th:unless="${i.auctionIsEnded}">Aktionen har utgått</span>
 
                         <p class="card-text" th:text="'Starting Price: '+${i.startingBid}"></p>
+
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
