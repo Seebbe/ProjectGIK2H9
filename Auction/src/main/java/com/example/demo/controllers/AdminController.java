@@ -56,7 +56,7 @@ public class AdminController {
                              @RequestParam(defaultValue = "-1") String startingBid,
                              @RequestParam(defaultValue = "-1") String picture,
                              @RequestParam(defaultValue = "-1") String id) {
-        itemRepository.updateItem(name,description,Integer.parseInt(startingBid),picture,Integer.parseInt(id));
+        itemRepository.updateItems(name,description,Integer.parseInt(startingBid),picture,Integer.parseInt(id));
 
         return "redirect:/admin/";
     }
