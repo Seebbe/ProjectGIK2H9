@@ -100,8 +100,6 @@ public class Item {
         this.description = description;
     }
 
-
-
     public int getStartingBid() {
         return startingBid;
     }
