@@ -121,4 +121,18 @@ public class User {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", enabled=" + enabled +
+                ", description='" + description + '\'' +
+                ", items=" + items +
+                ", bids=" + bids +
+                '}';
+    }
 }
