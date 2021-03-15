@@ -9,6 +9,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
     private String description;
     private Integer startingBid;
@@ -56,12 +57,21 @@ public class Item {
         this.picture=picture;
     }
 
+
     public void setId(Integer id) {
         this.id = id;
     }
 
     public void setStartingBid(Integer startingBid) {
         this.startingBid = startingBid;
+    }
+
+    public List<Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
     }
 
     public void setEnabled(Integer enabled) {
@@ -76,9 +86,7 @@ public class Item {
         this.user = user;
     }
 
-    public int getId() {
-        return id;
-    }
+
 
     public void setId(int id) {
         this.id = id;

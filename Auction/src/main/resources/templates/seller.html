@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="">
+<head th:replace="/fragments/head" xmlns:th="http://www.w3.org/1999/xhtml"></head>
+
+<body>
+
+<header th:replace="/fragments/header_"></header>
+
+<main>
+
+    <!-- Maincontent här-->
+    <div class="container">
+        <div class="row">
+
+            <div>
+                <button class ="btn" id="button" style="margin-top: 10px" th:onclick="'javascript:addAuktion()'">Add Auktion</button>
+            <div id="1"  style="display:none;margin-bottom: 10px">
+                <form action="/addauktion" method="get">
+                    <label for="name" >Name:</label><br>
+                    <input type="text" id="name" name="name"><br>
+                    <label for="endtime" >Endtime for auktion:</label><br>
+                    <input type="text" id="endtime" name="endtime"><br>
+                    <label for="startingprice" >Starting price:</label><br>
+                    <input type="text" id="startingprice" name="startingprice"><br>
+                    <label for="picture" >Picture URL:</label><br>
+                    <input type="text" id="picture" name="picture"><br>
+
+                    <textarea rows="4" cols="30" id="description" name="description" style="margin-top: 2%" placeholder="Description"></textarea>
+                    </textarea>
+
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                    <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                    <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                    <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                    <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                    <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                    <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+                </div>
+            </div>
+        </div>
+    </div><br><br>
+    <!-- Maincontent här-->
+
+</main>
+
+<footer th:replace="/fragments/footer" xmlns:th="http://www.w3.org/1999/xhtml"></footer>
+
+</body>
+</html>
