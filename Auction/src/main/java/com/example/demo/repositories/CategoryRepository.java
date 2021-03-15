@@ -6,14 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-
-<<<<<<< Updated upstream
-=======
-
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class CategoryRepository {
->>>>>>> main
->>>>>>> Stashed changes
+    
 }
