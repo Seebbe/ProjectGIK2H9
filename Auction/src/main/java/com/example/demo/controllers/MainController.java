@@ -25,5 +25,7 @@ public class MainController {
     userRepository.save(u3);
     //PASSWORD = 123
     //return "test";
+
+
 }
 }
