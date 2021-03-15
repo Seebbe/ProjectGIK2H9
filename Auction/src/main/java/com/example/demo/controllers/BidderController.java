@@ -46,17 +46,21 @@ public class BidderController {
             if (highestBid < tempBid.getPrice())
                 highestBid = tempBid.getPrice();
         }
+        if(!currentItem.auctionHasEnded()) {
+            if (placedBid.getPrice() < currentItem.getStartingBid()) {
+                model.addAttribute("message", "You can't place bid lower than the starting bid.");
+                return "genericmessage";
+            }
 
-        if (placedBid.getPrice() < currentItem.getStartingBid()) {
-            model.addAttribute("message", "You can't place bid lower than the starting bid.");
-            return "genericmessage";
+            if (placedBid.getPrice() <= highestBid) {
+                model.addAttribute("message", "You can't place bid lower than the current highest bid.");
+                return "genericmessage";
+            }
         }
-
-        if (placedBid.getPrice() <= highestBid) {
-            model.addAttribute("message", "You can't place bid lower than the current highest bid.");
-            return "genericmessage";
+        else {
+            model.addAttribute("message", "The auction is over.");
         }
-
+        
         loggedInUser.addBid(newBid);
         userRepository.save(loggedInUser);
 
