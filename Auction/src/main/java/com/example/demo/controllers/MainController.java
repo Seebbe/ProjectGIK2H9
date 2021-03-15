@@ -18,9 +18,9 @@ public class MainController {
     @EventListener(ApplicationReadyEvent.class)
     public void runOnStart(){
         //Skapar upp användare
-    User u1 = new User("Adminsson","admin@admin.se","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","ROLE_ADMIN");
-    User u2 = new User("En säljare","seller@user.com","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","ROLE_SELLER");
-    User u3 = new User("En budare","bidder@user2.com","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","ROLE_BIDDER");
+    User u1 = new User("Adminsson","admin@admin.se","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","Cool snubbe","ROLE_ADMIN");
+    User u2 = new User("En säljare","seller@user.com","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","Säljer som smör","ROLE_SELLER");
+    User u3 = new User("En budare","bidder@user2.com","$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe","Han köper allt","ROLE_BIDDER");
     userRepository.save(u1);
     userRepository.save(u2);
     userRepository.save(u3);

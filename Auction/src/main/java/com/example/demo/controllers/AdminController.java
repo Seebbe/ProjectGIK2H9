@@ -43,9 +43,15 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping(value = "/deleteComment/{id}")
-    public String deleteComment(@PathVariable Integer id){
+    @GetMapping(value = "/deleteItem/{id}")
+    public String deleteItem(@PathVariable Integer id){
         itemRepository.deleteById(id);
-        return "redirect:/adminView";
+        return "redirect:/admin/adminView";
+    }
+
+    @GetMapping(value = "/deleteUser/{id}")
+    public String deleteUser(@PathVariable Integer id){
+        userRepository.deleteById(id);
+        return "redirect:/admin/adminView";
     }
 }
