@@ -1,14 +1,80 @@
 package com.example.demo.models;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 public class Item {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
     private String description;
-    private Category category;
-    private int startingBid;
+    private Integer startingBid;
     private String endTime;
-    private int enabled;
+    private Integer enabled;
     private String picture;
+
+    //Relation to Bids
+    @OneToMany(
+            mappedBy ="item",
+            cascade =CascadeType.ALL,
+            orphanRemoval = true
+    )
+    public List<Bid> bids = new ArrayList<>();
+
+    public void addBid(Bid bid){
+        bids.add(bid);
+        bid.setItem(this);
+    }
+
+    //Relation to Category
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    //Relation to User
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    public Item(){
+
+    }
+    public Item(String name,String description,int startingBid,String endTime,int enabled,String picture){
+        this.name=name;
+        this.description=description;
+        this.startingBid=startingBid;
+        this.endTime=endTime;
+        this.enabled=enabled;
+        this.picture=picture;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setStartingBid(Integer startingBid) {
+        this.startingBid = startingBid;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public int getId() {
         return id;
@@ -34,13 +100,7 @@ public class Item {
         this.description = description;
     }
 
-    public Category getCategory() {
-        return category;
-    }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     public int getStartingBid() {
         return startingBid;

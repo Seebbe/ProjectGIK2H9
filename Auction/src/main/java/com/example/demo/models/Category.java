@@ -1,10 +1,36 @@
 package com.example.demo.models;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 public class Category {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String title;
     private String description;
-    private Item item;
+
+    //Relation to Items
+    @OneToMany(
+            mappedBy ="category",
+            cascade =CascadeType.ALL,
+            orphanRemoval = true
+    )
+    public List<Item> items =new ArrayList<>();
+    public void addItem(Item item){
+        items.add(item);
+        item.setCategory(this);
+    }
+
+    public Category(){
+
+    }
+    public Category(String title,String description){
+        this.title=title;
+        this.description=description;
+    }
 
     public int getId() {
         return id;
@@ -30,11 +56,5 @@ public class Category {
         this.description = description;
     }
 
-    public Item getItem() {
-        return item;
-    }
 
-    public void setItem(Item item) {
-        this.item = item;
-    }
 }

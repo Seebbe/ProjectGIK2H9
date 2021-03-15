@@ -1,11 +1,51 @@
 package com.example.demo.models;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 public class User {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
     private String email;
     private String password;
     private String role;
+
+    //Relation to Items
+    @OneToMany(
+            mappedBy ="user",
+            cascade =CascadeType.ALL,
+            orphanRemoval = true
+    )
+    public List<Item> items = new ArrayList<>();
+
+    public void addItem(Item item){
+        items.add(item);
+        item.setUser(this);
+    }
+    //Relation to Bids
+    @OneToMany(
+    mappedBy ="user",
+    cascade =CascadeType.ALL,
+    orphanRemoval = true
+    )
+    public List<Bid> bids =new ArrayList<>();
+    public void addBid(Bid bid){
+        bids.add(bid);
+        bid.setUser(this);
+    }
+    public User(){
+
+    }
+    public User(String name,String email,String password,String role){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role=role;
+    }
 
     public int getId() {
         return id;
