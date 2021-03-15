@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface BidRepository extends JpaRepository<Bid, Integer> {
-    List<Bid> findTop3ByItemOrderByPrice(Item item);
+    List<Bid> findAllByItemOrderByPrice(Item item);
 
 }

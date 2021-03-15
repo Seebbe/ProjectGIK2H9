@@ -42,7 +42,7 @@ public class BidderController {
         newBid.setPrice(placedBid.getPrice());
 
         Integer highestBid = 0;
-        for (Bid tempBid : bidRepository.findTop3ByItemOrderByPrice(currentItem)) {
+        for (Bid tempBid : bidRepository.findAllByItemOrderByPrice(currentItem)) {
             if (highestBid < tempBid.getPrice())
                 highestBid = tempBid.getPrice();
         }
@@ -51,7 +51,8 @@ public class BidderController {
             model.addAttribute("message", "You can't place bid lower than the starting bid.");
             return "genericmessage";
         }
-        if (placedBid.getPrice() < highestBid) {
+
+        if (placedBid.getPrice() <= highestBid) {
             model.addAttribute("message", "You can't place bid lower than the current highest bid.");
             return "genericmessage";
         }
