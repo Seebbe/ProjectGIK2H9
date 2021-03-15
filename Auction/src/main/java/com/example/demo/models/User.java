@@ -13,6 +13,9 @@ public class User {
     private String email;
     private String password;
     private String role;
+    @Column(columnDefinition = "TINYINT")
+    private Integer enabled;
+    private String description;
 
     //Relation to Items
     @OneToMany(
@@ -71,8 +74,6 @@ public class User {
         this.bids = bids;
     }
 
-
-
     public String getName() {
         return name;
     }
@@ -103,5 +104,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
