@@ -58,13 +58,13 @@ public class BidderController {
                 model.addAttribute("loggedin",loggedInUser);
                 return "genericmessage";
             }
+            loggedInUser.addBid(newBid);
+            userRepository.save(loggedInUser);
         }
         else {
             model.addAttribute("message", "The auction is over.");
+            return "genericmessage";
         }
-        
-        loggedInUser.addBid(newBid);
-        userRepository.save(loggedInUser);
 
         model.addAttribute("item", itemRepository.findById(id).get());
         model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(currentItem));

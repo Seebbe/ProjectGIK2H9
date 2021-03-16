@@ -18,6 +18,12 @@
                     <a th:href="@{'/home/' + ${c.id}}" class="card" style="text-align:center" th:text="${c.title}"></a>
             </span>
         </div>
+
+        <div th:unless="${currentCategory == null}">
+            <h3><span class="badge badge-secondary mb-1" th:text="${currentCategory.title}"></span></h3>
+            <p th:text="${currentCategory.description}"></p>
+        </div>
+
         <div class="row">
             <div class="col-sm-4" th:each="i: ${items}">
                 <div class="card mb-4" style="width: 20rem;" th:if="${i.name}">

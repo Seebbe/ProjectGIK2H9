@@ -119,6 +119,7 @@ public class HomeController {
         loggedInUser.addItem(a4);
         itemRepository.save(a4);
 
+        model.addAttribute("currentCategory", new Category("All items", ""));
         model.addAttribute("totalPagesPairDisplay", totalPagesPairDisplay.entrySet());
         model.addAttribute("items",items);
         model.addAttribute("category",categoryRepository.findAll());
@@ -166,7 +167,7 @@ public class HomeController {
         System.out.println(itemRepository.findAllByCategory(catTemp));
 
          */
-
+        model.addAttribute("currentCategory", categoryRepository.findById(id).get());
         model.addAttribute("items",itemRepository.findAllItemsByCategory(id));
         model.addAttribute("category",categoryRepository.findAll());
 
