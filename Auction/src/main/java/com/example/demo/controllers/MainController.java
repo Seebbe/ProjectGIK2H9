@@ -101,7 +101,7 @@ public class MainController {
 
         model.addAttribute("item", itemRepository.findById(id).get());
         model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(item));
-
+        model.addAttribute("loggedin",user);
         return "singleitem";
     }
 }

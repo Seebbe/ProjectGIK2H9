@@ -31,6 +31,7 @@ public class AdminController {
     public String index(Model model,@RequestParam(required = false) Integer id) {
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         model.addAttribute("admin", loggedInUser);
+        model.addAttribute("loggedin",loggedInUser);
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
 

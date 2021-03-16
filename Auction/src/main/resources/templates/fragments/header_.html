@@ -9,7 +9,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand text-light" href="#">Navbar</a>
+            <a class="navbar-brand text-light" href="/"><img th:src="@{/images/loga.png}" width="100rem" height="50rem"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,6 +25,7 @@
                         <a class="nav-link text-light" href="/admin/">Admin sida</a>
                     </li>
                 </ul>
+                <h5 style="color: white;margin-right: 10px" th:text="'Logged in as: '+${loggedin.name}"></h5>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>

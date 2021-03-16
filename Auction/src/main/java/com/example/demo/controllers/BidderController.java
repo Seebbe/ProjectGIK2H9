@@ -49,11 +49,13 @@ public class BidderController {
         if(!currentItem.auctionHasEnded()) {
             if (placedBid.getPrice() < currentItem.getStartingBid()) {
                 model.addAttribute("message", "You can't place bid lower than the starting bid.");
+                model.addAttribute("loggedin",loggedInUser);
                 return "genericmessage";
             }
 
             if (placedBid.getPrice() <= highestBid) {
                 model.addAttribute("message", "You can't place bid lower than the current highest bid.");
+                model.addAttribute("loggedin",loggedInUser);
                 return "genericmessage";
             }
         }
@@ -63,6 +65,8 @@ public class BidderController {
         
         loggedInUser.addBid(newBid);
         userRepository.save(loggedInUser);
+
+        model.addAttribute("loggedin",loggedInUser);
 
         model.addAttribute("item", itemRepository.findById(id).get());
         model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(currentItem));
