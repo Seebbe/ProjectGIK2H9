@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Service.SendNotficationService;
 import com.example.demo.models.Category;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
@@ -66,6 +67,9 @@ public class SellerController {
         model.addAttribute("category",categoryRepository.findAll());
         return "seller";
     }
+    @Autowired
+    SendNotficationService sendNotficationService;
+
     @GetMapping("/addauktion")
     public String addAuktion(@RequestParam(defaultValue = "-1") String name,
                              @RequestParam(defaultValue = "-1") String description,
@@ -77,15 +81,24 @@ public class SellerController {
 
         Item item = new Item(name,description,Integer.parseInt(startingprice),new Date(),enabled,picture);
         List<Category>categories = categoryRepository.findAll();
-        for(Category c:categories){
-            if(c.getTitle().equals(category)){
+        for(Category c:categories) {
+            if (c.getTitle().equals(category)) {
                 User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
                 item.setCategory(c);
 
                 loggedInUser.addItem(item);
                 itemRepository.save(item);
+
+                /*public String sendEmailNotification (Model model){
+
+                    sendNotficationService.sendEmailNotification("bidder@du.se", "Items", "New item added");
+
+                 */
+                }
+
+
             }
-        }
+        
 
         return "redirect:/seller/add";
     }
