@@ -12,9 +12,21 @@
     <div class="container">
         <h2 th:text="${meddelande}"></h2>
         <p th:text="${admin}"></p>
+        <div class="row" style="margin-bottom: 30px">
+            <a href="/" class="card col-sm-2" style="text-align:center">All</a>
+            <span class="col-sm-2" th:each="c: ${category}">
+
+                    <a th:href="@{'/home/' + ${c.id}}" class="card" style="text-align:center" th:text="${c.title}"></a>
+
+
+
+
+
+            </span>
+        </div>
         <div class="row">
             <div class="col-sm-4" th:each="i: ${items}">
-                <div class="card mb-4" style="width: 20rem;">
+                <div class="card mb-4" style="width: 20rem;" th:if="${i.name}">
                     <img th:src="${i.picture}" class="card-img-top mb-5" alt="...">
                     <div class="card-body">
 
@@ -28,7 +40,7 @@
                         <p class="card-text" th:text="'Starting Price: '+${i.startingBid}"></p>
                         <a th:href="'/auctionitem?id=' + ${i.id}"><button type="button" class="btn btn-primary">Read more and place bid</button></a>
 
-                        
+
                     </div>
                 </div>
             </div>
