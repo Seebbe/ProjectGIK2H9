@@ -64,7 +64,6 @@ public class SellerController {
         categoryRepository.save(c4);*/
         model.addAttribute("items",itemRepository.findAll());
         model.addAttribute("category",categoryRepository.findAll());
-        model.addAttribute("loggedin",loggedInUser);
         return "seller";
     }
     @GetMapping("/addauktion")

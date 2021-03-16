@@ -40,7 +40,7 @@ public class HomeController {
         a4.setEndTime(Calendar.getInstance().getTime());
 
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
-        model.addAttribute("loggedin",loggedInUser);
+
         loggedInUser.addItem(a1);
         itemRepository.save(a1);
         loggedInUser.addItem(a2);

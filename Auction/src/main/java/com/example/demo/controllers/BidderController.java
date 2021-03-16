@@ -66,8 +66,6 @@ public class BidderController {
         loggedInUser.addBid(newBid);
         userRepository.save(loggedInUser);
 
-        model.addAttribute("loggedin",loggedInUser);
-
         model.addAttribute("item", itemRepository.findById(id).get());
         model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(currentItem));
         return "singleitem";
