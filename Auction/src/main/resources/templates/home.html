@@ -26,14 +26,9 @@
                         <span th:if="${i.auctionHasEnded}" class="alert-danger p-1">Auction has ended</span>
                         <span th:unless="${i.auctionHasEnded}" class="alert-success p-1">Auction is active</span>
                         <p class="card-text" th:text="'Starting Price: '+${i.startingBid}"></p>
-                        <a th:href="'/auctionitem?id=' + ${i.id}"><p class="card-text">Read more</p></a>
+                        <a th:href="'/auctionitem?id=' + ${i.id}"><button type="button" class="btn btn-primary">Read more and place bid</button></a>
 
-
-
-
-
-                        <a th:href="@{'/seller/delete/' + ${i.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
-
+                        
                     </div>
                 </div>
             </div>
