@@ -15,13 +15,7 @@
         <div class="row" style="margin-bottom: 30px">
             <a href="/" class="card col-sm-2" style="text-align:center">All</a>
             <span class="col-sm-2" th:each="c: ${category}">
-
                     <a th:href="@{'/home/' + ${c.id}}" class="card" style="text-align:center" th:text="${c.title}"></a>
-
-
-
-
-
             </span>
         </div>
         <div class="row">
@@ -40,11 +34,35 @@
                         <p class="card-text" th:text="'Starting Price: '+${i.startingBid}"></p>
                         <a th:href="'/auctionitem?id=' + ${i.id}"><button type="button" class="btn btn-primary">Read more and place bid</button></a>
 
-
                     </div>
                 </div>
             </div>
         </div>
+        <nav aria-label="Page navigation example" th:if="${totalPages} != null">
+            <ul class="pagination justify-content-center">
+                <li class="page-item page-item disabled">
+                    <p class="page-link" th:text="'Page ' + ${displayCurrentPageNr} + ' of ' + ${totalPages}"></p>
+                </li>
+                <div th:if="${hasPrevious}">
+                    <li class="page-item">
+                        <a class="page-link" th:href="'?page=' + ${previousPageNumber}" tabindex="-1">Previous</a>
+                    </li>
+                </div>
+
+                <div th:each="i: ${totalPagesPairDisplay}">
+                    <li class="page-item">
+                        <a class="page-link" th:href="'?page=' + ${i.key}" th:text="${i.value}">
+                        </a></li>
+                </div>
+
+                <div th:if="${hasNext}">
+                <li class="page-item">
+                    <a class="page-link" th:href="'?page=' + ${nextPageNumber}">Next</a>
+                </li>
+                </div>
+
+            </ul>
+        </nav>
     </div><br><br>
     <!-- Maincontent här-->
 

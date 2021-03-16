@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.Service.SendNotficationService;
+
 import com.example.demo.models.Category;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
@@ -67,8 +67,8 @@ public class SellerController {
         model.addAttribute("category",categoryRepository.findAll());
         return "seller";
     }
-    @Autowired
-    SendNotficationService sendNotficationService;
+    //@Autowired
+    //SendNotficationService sendNotficationService;
 
     @GetMapping("/addauktion")
     public String addAuktion(@RequestParam(defaultValue = "-1") String name,
