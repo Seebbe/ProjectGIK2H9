@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -8,6 +9,16 @@ public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    public Bid() {
+    }
+
+    public Bid(Integer price, Date date, User user, Item item) {
+        this.price = price;
+        this.date = date;
+        this.user = user;
+        this.item = item;
+    }
 
     public void setId(Integer id) {
         this.id = id;
@@ -52,7 +63,6 @@ public class Bid {
         this.id = id;
     }
 
-
     public Date getDate() {
         return date;
     }
@@ -67,6 +77,12 @@ public class Bid {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getFormattedDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = simpleDateFormat.format(this.date);
+        return formattedDate;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.example.demo.models.Bid;
 import com.example.demo.models.Category;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
+import com.example.demo.repositories.BidRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Calendar;
 import java.util.Date;
 
+import static java.util.Comparator.comparing;
+
 @Controller
 public class MainController {
     @Autowired
@@ -28,6 +31,8 @@ public class MainController {
     private CategoryRepository categoryRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private BidRepository bidRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void runOnStart() {
@@ -79,9 +84,23 @@ public class MainController {
     //Singelsida för ett auktionsobjekt
     @GetMapping("/auctionitem")
     public String getSingleItemPage(Model model, @RequestParam(name = "id") Integer id) {
-        System.out.println(id);
-        System.out.println(itemRepository.findById(id).get());
+        //hårdkodar in 4 bud
+        User user = userRepository.findByEmail(getLoggedInUser());
+        Item item = itemRepository.findById(id).get();
+       /* Bid bid1 = new Bid(26, new Date(), user, item);
+        Bid bid2 = new Bid(55, new Date(), user, item);
+        Bid bid3 = new Bid(56, new Date(), user, item);
+        Bid bid4 = new Bid(57, new Date(), user, item);
+        item.addBid(bid1);
+        item.addBid(bid2);
+        item.addBid(bid3);
+        item.addBid(bid4);
+        itemRepository.save(item);
+
+        */
+
         model.addAttribute("item", itemRepository.findById(id).get());
+        model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(item));
 
         return "singleitem";
     }

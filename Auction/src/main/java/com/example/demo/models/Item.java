@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import static java.util.Comparator.comparing;
 
 @Entity
 public class Item {
@@ -165,6 +166,18 @@ public class Item {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = simpleDateFormat.format(this.endTime);
         return formattedDate;
+    }
+
+    public Bid getHighestBid() {
+        Bid highestBid = null;
+        if (this.bids.isEmpty()) {
+            return highestBid;
+        }
+        else {
+            highestBid = this.bids.stream().max(comparing(Bid::getPrice)).get();
+        }
+
+        return highestBid;
     }
 
     @Override
