@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Timer;
 import java.util.TimerTask;
 
-@Component
+@Service
 public class EndAuctionTimer {
 
     @Autowired
@@ -24,6 +24,7 @@ public class EndAuctionTimer {
                 itemRepository.save(item);
 
                 //JavaMailSender här som skickar mail till vinnaren (om det finns någon)
+                System.out.println("Finns det en vinnare: " + !(item.bids.isEmpty()));
             }
         };
 
