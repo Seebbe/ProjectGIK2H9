@@ -26,7 +26,7 @@
                     <input type="text" id="picture" name="picture"><br><br>
                     <label for="category">Category:</label>
                     <select id="category" name="category">
-                        <option th:each="c: ${category}" th:text="${c.title}" th:value="${c.title}"></option>
+                        <option th:each="c: ${category}" th:text="${c.title}" th:value="${c.id}"></option>
 
                     </select>
 

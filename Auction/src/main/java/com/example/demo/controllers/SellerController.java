@@ -7,6 +7,8 @@ import com.example.demo.models.User;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.timers.EndAuctionTask;
+import com.example.demo.timers.EndAuctionTimer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,9 @@ public class SellerController {
     UserRepository userRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    EndAuctionTimer endAuctionTimer;
+
     @GetMapping("/add")
     public String home(Model model){
         Category category = categoryRepository.findByTitle("Teknik");
@@ -74,33 +79,50 @@ public class SellerController {
     public String addAuktion(@RequestParam(defaultValue = "-1") String name,
                              @RequestParam(defaultValue = "-1") String description,
                              @RequestParam(defaultValue = "-1") String endtime,
-                             @RequestParam(defaultValue = "-1") String startingprice,
+                             @RequestParam(defaultValue = "-1") Integer startingprice,
                              @RequestParam(defaultValue = "-1") String picture,
-                             @RequestParam(defaultValue = "-1") String category){
+                             @RequestParam(defaultValue = "-1") Integer category){
         int enabled = 1;
 
-        Item item = new Item(name,description,Integer.parseInt(startingprice),new Date(),enabled,picture);
+        Item item = new Item(name,description,startingprice,new Date(),enabled,picture);
+        item.setCategory(categoryRepository.findById(category).get());
         List<Category>categories = categoryRepository.findAll();
-        for(Category c:categories) {
-            if (c.getTitle().equals(category)) {
-                User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
-                item.setCategory(c);
-
-                loggedInUser.addItem(item);
-                itemRepository.save(item);
-
-                /*public String sendEmailNotification (Model model){
-
-                    sendNotficationService.sendEmailNotification("bidder@du.se", "Items", "New item added");
-
-                 */
-                }
-
-
-            }
-        
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
+        loggedInUser.addItem(item);
+        item = itemRepository.save(item);
+        //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
+        //endTime har gått ut
+        //System.out.println(item);
+        endAuctionTimer.setItem(item);
+        endAuctionTimer.startTimer();
 
         return "redirect:/seller/add";
+    }
+
+    @GetMapping("/addauktiontesttimer")
+    public String addAuktion2(@RequestParam(defaultValue = "-1") String name,
+                             @RequestParam(defaultValue = "-1") String description,
+                             @RequestParam(defaultValue = "-1") String endtime,
+                             @RequestParam(defaultValue = "-1") String startingprice,
+                             @RequestParam(defaultValue = "-1") String picture,
+                             @RequestParam(defaultValue = "-1") Integer category){
+        int enabled = 1;
+        String image = "https://thumbs.dreamstime.com/z/stopwatch-mechanical-clock-timer-chrome-isolated-d-chronograph-white-background-50874022.jpg";
+        Item item = new Item(name,description,Integer.parseInt(startingprice),new Date(),enabled,picture);
+        item = new Item("Testprodukt", "En testprodukt", 400, new Date(), enabled, image);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, 2);
+        item.setEndTime(calendar.getTime());
+        item.setCategory(categoryRepository.findById(3).get());
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
+        loggedInUser.addItem(item);
+        //spara tillbaka item nu med ett autogenererat id
+        item = itemRepository.save(item);
+        //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
+        //endTime har gått ut
+        //System.out.println(item);
+        endAuctionTimer.setItem(item);
+        endAuctionTimer.startTimer();
     }
 
     @GetMapping("")
@@ -124,7 +146,6 @@ public class SellerController {
 
         return "redirect:/seller/add";
     }
-
 }
 
 
