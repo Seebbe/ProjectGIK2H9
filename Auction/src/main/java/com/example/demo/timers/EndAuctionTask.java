@@ -26,6 +26,7 @@ public class EndAuctionTask extends TimerTask {
             System.out.println(item.getName() + " ändrad!" + item.getEnabled());
         System.out.println(item.getName() + " auction end time has ended. Set to enabled = 0");
 
+
         //finns det en vinnare? osv
         //koda koda
         System.out.println("Skicka mail till vinnaren om det finns en");

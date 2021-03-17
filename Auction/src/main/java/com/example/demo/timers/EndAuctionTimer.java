@@ -22,9 +22,10 @@ public class EndAuctionTimer {
                 item.setEnabled(0);
                 System.out.println(item.getName() + " ändrad!" + item.getEnabled());
                 itemRepository.save(item);
+                //Item endedActionItem = itemRepository.findById(item.getId()).get();
 
                 //JavaMailSender här som skickar mail till vinnaren (om det finns någon)
-                System.out.println("Finns det en vinnare: " + !(item.bids.isEmpty()));
+                //System.out.println("Finns det en vinnare: " + !(endedActionItem.bids.isEmpty()));
             }
         };
 
