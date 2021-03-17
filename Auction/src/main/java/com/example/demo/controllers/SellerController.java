@@ -4,23 +4,20 @@ package com.example.demo.controllers;
 import com.example.demo.models.Category;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
+import com.example.demo.repositories.BidRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
-import com.example.demo.timers.EndAuctionTask;
 import com.example.demo.timers.EndAuctionTimer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 
@@ -34,6 +31,8 @@ public class SellerController {
     CategoryRepository categoryRepository;
     @Autowired
     EndAuctionTimer endAuctionTimer;
+    @Autowired
+    BidRepository bidRepository;
 
     @GetMapping("/add")
     public String home(Model model){
@@ -89,11 +88,15 @@ public class SellerController {
         List<Category>categories = categoryRepository.findAll();
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         loggedInUser.addItem(item);
+        if (!endtime.contains("")) {
+            
+        }
         item = itemRepository.save(item);
+
         //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
         //endTime har gått ut
         //System.out.println(item);
-        endAuctionTimer.setItem(item);
+        endAuctionTimer.setAddedItem(item);
         endAuctionTimer.startTimer();
 
         return "redirect:/seller/add";
@@ -105,7 +108,10 @@ public class SellerController {
                              @RequestParam(defaultValue = "-1") String endtime,
                              @RequestParam(defaultValue = "-1") String startingprice,
                              @RequestParam(defaultValue = "-1") String picture,
-                             @RequestParam(defaultValue = "-1") Integer category){
+                             @RequestParam(defaultValue = "-1") Integer category,
+                              Model model){
+
+
         int enabled = 1;
         String image = "https://thumbs.dreamstime.com/z/stopwatch-mechanical-clock-timer-chrome-isolated-d-chronograph-white-background-50874022.jpg";
         Item item = new Item(name,description,Integer.parseInt(startingprice),new Date(),enabled,picture);
@@ -121,8 +127,25 @@ public class SellerController {
         //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
         //endTime har gått ut
         //System.out.println(item);
-        endAuctionTimer.setItem(item);
+        endAuctionTimer.setAddedItem(item);
         endAuctionTimer.startTimer();
+
+        Item item2 = new Item("Testprodukt2", "En testprodukt2", 400, new Date(), enabled, image);
+        calendar.add(Calendar.SECOND, 4);
+        item2.setEndTime(calendar.getTime());
+        item2.setCategory(categoryRepository.findById(3).get());
+        loggedInUser.addItem(item2);
+        //spara tillbaka item2 nu med ett autogenererat id
+        item2 = itemRepository.save(item2);
+        //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
+        //endTime har gått ut
+        //System.out.println(item2);
+        endAuctionTimer.setAddedItem(item2);
+        endAuctionTimer.startTimer();
+
+        model.addAttribute("item", itemRepository.findById(item.getId()).get());
+        model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(item));
+        return "singleitem";
     }
 
     @GetMapping("")
