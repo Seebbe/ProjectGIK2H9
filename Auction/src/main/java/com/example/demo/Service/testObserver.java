@@ -1,18 +1,13 @@
 package com.example.demo.service;
 
-import org.springframework.stereotype.Service;
-
 import java.util.Observable;
 import java.util.Observer;
 
-@Service
-public class NotifyBiddersService implements Observer {
+public class testObserver implements Observer  {
 
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println("Haj!");
         System.out.println(arg);
-
-
-        System.out.println("ej");
     }
 }

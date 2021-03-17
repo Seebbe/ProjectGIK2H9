@@ -1,12 +1,13 @@
 package com.example.demo.controllers;
 
-import com.example.demo.Service.NotifyBiddersService;
 import com.example.demo.models.Bid;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
 import com.example.demo.repositories.BidRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.service.NotifyBiddersService;
+import com.example.demo.service.testObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/bidder/")
 public class BidderController {
+    List<Item> items = new ArrayList<>();
+
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
@@ -37,15 +40,15 @@ public class BidderController {
 
     @PostMapping("/laybid")
     public String layBid(Model model, @RequestParam(name = "id") Integer id, @ModelAttribute Bid placedBid) {
+
         Bid newBid = new Bid();
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         Item currentItem = itemRepository.findById(id).get();
+        Item currentItemSave = itemRepository.findById(id).get();
        // newBid.setItem(currentItem);
         newBid.setDate(new Date());
         newBid.setUser(loggedInUser);
         newBid.setPrice(placedBid.getPrice());
-
-
 
         Integer highestBid = 0;
         for (Bid tempBid : bidRepository.findAllByItemOrderByPrice(currentItem)) {
@@ -64,9 +67,9 @@ public class BidderController {
                 model.addAttribute("loggedin",loggedInUser);
                 return "genericmessage";
             }
+            currentItemSave.addObserver(notifyBiddersService);
             currentItem.addBid(newBid);
             itemRepository.save(currentItem);
-            currentItem.addObserver(notifyBiddersService);
         }
         else {
             model.addAttribute("message", "The auction is over.");
