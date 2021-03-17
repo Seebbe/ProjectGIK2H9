@@ -1,26 +1,25 @@
 package com.example.demo.timers;
 
 import com.example.demo.models.Item;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Timer;
 
-@Service
+@Component
 public class EndAuctionTimer {
-    Timer timer = new Timer();
-    Item item;
-    @Autowired
-    EndAuctionTask endAuctionTask;
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
+    Item addedItem;
 
     public void startTimer() {
-        endAuctionTask.setItem(item);
-        System.out.println(endAuctionTask);
-        timer.schedule(endAuctionTask, item.getEndTime());
+        //endAuctionTask.setItem(addedItem);
+        Timer timer = new Timer();
+        EndAuctionTask endAuctionTask2 = new EndAuctionTask();
+        endAuctionTask2.setItem(addedItem);
+        timer.schedule(endAuctionTask2, addedItem.getEndTime());
+
+    }
+
+    public void setAddedItem(Item addedItem) {
+        this.addedItem = addedItem;
     }
 
 }
