@@ -67,6 +67,7 @@
                         <th scope="col">Description</th>
                         <th scope="col">End of auction</th>
                         <th scope="col">Creator</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Functions</th>
                         <th scope="col"> </th>
                     </tr>
@@ -79,11 +80,12 @@
                         <td th:text="${i.description}"></td>
                         <td th:text="${i.formattedDate}"></td>
                         <td th:text="${i.user.email}"></td>
+                        <td th:text="${i.category.title}"></td>
                         <td><a th:href="@{'/admin/deleteItem/' + ${i.id}}"><button type="button" class="btn btn-danger">Delete</button></a></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Update Comment
+                                    Update Item
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
@@ -96,6 +98,10 @@
                                         <input type="text" id="startingBid" name="startingBid" th:value="${i.startingBid}"><br>
                                         <label for="picture" >Picture URL:</label><br>
                                         <input type="text" id="picture" name="picture" th:value="${i.picture}"><br>
+                                        <label for="category" th:text="'Category: '+${i.category.title}">Category:</label><br>
+                                        <select id="category" name="category">
+                                            <option th:each="c: ${category}" th:text="${c.title}" th:value="${c.title}"></option>
+                                        </select><br>
                                         <label for="picture" >Description:</label><br>
                                         <textarea rows="4" cols="30" id="description" name="description" th:text="${i.description}"></textarea>
                                         </textarea>
