@@ -96,8 +96,7 @@ public class SellerController {
         //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
         //endTime har gått ut
         //System.out.println(item);
-        endAuctionTimer.setAddedItem(item);
-        endAuctionTimer.startTimer();
+        endAuctionTimer.startTimer(item);
 
         return "redirect:/seller/add";
     }
@@ -127,8 +126,7 @@ public class SellerController {
         //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
         //endTime har gått ut
         //System.out.println(item);
-        endAuctionTimer.setAddedItem(item);
-        endAuctionTimer.startTimer();
+        endAuctionTimer.startTimer(item);
 
         Item item2 = new Item("Testprodukt2", "En testprodukt2", 400, new Date(), enabled, image);
         calendar.add(Calendar.SECOND, 4);
@@ -139,9 +137,7 @@ public class SellerController {
         item2 = itemRepository.save(item2);
         //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
         //endTime har gått ut
-        //System.out.println(item2);
-        endAuctionTimer.setAddedItem(item2);
-        endAuctionTimer.startTimer();
+        endAuctionTimer.startTimer(item2);
 
         model.addAttribute("item", itemRepository.findById(item.getId()).get());
         model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(item));
