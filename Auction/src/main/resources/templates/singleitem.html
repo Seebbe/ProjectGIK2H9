@@ -29,15 +29,48 @@
                         <span th:if="${item.auctionHasEnded}" class="alert-danger p-1">Auction has ended</span>
                         <span th:unless="${item.auctionHasEnded}" class="alert-success p-1">Auction is active</span>
                         <p class="card-text" th:text="'Starting Price: '+${item.startingBid} + ' SEK'"></p>
-                        <div th:if="${item.getHighestBid() != null}">
-                            <p class="card-text alert-success" th:text="'Highest bid: '+${item.getHighestBid.price} + ' SEK' + ' by ' + ${item.getHighestBid.user.getName()}"></p>
+
+                        <div th:unless="${item.auctionHasEnded}">
+                            <div th:if="${item.getHighestBid()}">
+                                <p class="card-text alert-success"
+                                   th:text="'Highest bid: '+${item.getHighestBid.price} + ' SEK' + ' by '  + ${item.getHighestBid.user.name}">
+                                </p>
+                            </div>
                         </div>
 
+                        <div th:if="${item.auctionHasEnded}">
 
-                        <form th:action="'/bidder/laybid?id=' + ${item.id}" method="POST" class="mt-3">
+                            <div th:if="${item.getHighestBid() == null}">
+                                <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item active alert-danger">
+                                        No winner
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div th:unless="${item.getHighestBid() == null}">
+                                <h5>Winner</h5>
+                                <small class="text-muted" th:text="${item.getHighestBid.date}"></small>
+                                <p class="card-text alert-success" th:text="'Highest bid: '+${item.getHighestBid.price} + ' SEK' + ' by '  + ${item.getHighestBid.user.name}">
+                                </p>
+
+                                <a th:href="'mailto:' + ${item.getHighestBid.user.email}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+                                    </svg>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        <span th:unless="${item.auctionHasEnded}">
+                            <form th:action="'/bidder/laybid?id=' + ${item.id}" method="POST" class="mt-3">
                             <input type="text" th:value="${item.startingBid}" name="price"><br>
                             <button type="submit" class="btn btn-primary mt-2">Place bid</button>
                         </form>
+                        </span>
+
 
                     </div>
                 </div>
@@ -50,7 +83,7 @@
                     <div class="card-body">
                         <h5 class="card-title">About the seller</h5>
                         <a th:href="'mailto:' + ${item.user.email}"><p class="card-title"
-                                                                        th:text="'Created by: '+${item.user.name}">e</p>
+                                                                       th:text="'Created by: '+${item.user.name}">e</p>
                         </a>
                         <p class="card-text" th:text="${item.user.description}"></p>
                     </div>
@@ -68,11 +101,14 @@
                         <div th:unless="${item.bids.isEmpty()}" class="alert-warning p-1">
                             <ul class="navbar-nav ml-auto" th:each="i: ${top3bids}">
                                 <li class="nav-item active">
-                                    <a class="nav-link text-dark" th:href="'mailto:' + ${i.user.email}" th:text="${i.user.name}"></a><p th:text="${i.price} + ' SEK'"></p>
+                                    <a class="nav-link text-dark" th:href="'mailto:' + ${i.user.email}"
+                                       th:text="${i.user.name}"></a>
+                                    <p th:text="${i.price} + ' SEK'"></p>
                                 </li>
                             </ul>
                             <!-- Modal med alla bids -->
-                            <a href="#" th:text="'See all '+${item.bids.size()} + ' bids'" data-target="#showAllBidsModal" data-toggle="modal"> </a>
+                            <a href="#" th:text="'See all '+${item.bids.size()} + ' bids'"
+                               data-target="#showAllBidsModal" data-toggle="modal"> </a>
 
                             <div class="modal fade" id="showAllBidsModal">
                                 <div class="modal-dialog">
@@ -83,33 +119,32 @@
                                         <div class="modal-body">
                                             <ul class="navbar-nav ml-auto" th:each="i: ${item.bids}">
                                                 <li class="nav-item active">
-                                                    <small class="text-muted" th:text="${i.getFormattedDate}"></small> <a class="nav-link text-dark" th:href="'mailto:' + ${i.user.email}" th:text="${i.user.name}"></a><p th:text="${i.price} + ' SEK'"></p>
+                                                    <small class="text-muted" th:text="${i.getFormattedDate}"></small>
+                                                    <a class="nav-link text-dark" th:href="'mailto:' + ${i.user.email}"
+                                                       th:text="${i.user.name}"></a>
+                                                    <p th:text="${i.price} + ' SEK'"></p>
                                                 </li>
                                             </ul>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
 
     </div>
 
-    </div>
-    </div>
-    </div>
-    </div>
 
-    </div>
-
-    </div><br><br>
+    <br><br>
 
     <!-- Maincontent här-->
 

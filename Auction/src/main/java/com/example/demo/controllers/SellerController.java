@@ -121,7 +121,7 @@ public class SellerController {
         Item item = new Item(name,description,Integer.parseInt(startingprice),new Date(),enabled,picture);
         item = new Item("Testprodukt", "En testprodukt", 400, new Date(), enabled, image);
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, 2);
+        calendar.add(Calendar.SECOND, 10);
         item.setEndTime(calendar.getTime());
         item.setCategory(categoryRepository.findById(3).get());
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
