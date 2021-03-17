@@ -2,14 +2,12 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import static java.util.Comparator.comparing;
 
 @Entity
-public class Item {
+public class Item extends Observable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,6 +30,9 @@ public class Item {
     public void addBid(Bid bid){
         bids.add(bid);
         bid.setItem(this);
+        setChanged();
+        notifyObservers(bid);
+
     }
 
     //Relation to Category

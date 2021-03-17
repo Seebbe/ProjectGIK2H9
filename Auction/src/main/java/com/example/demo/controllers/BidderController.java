@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Service.NotifyBiddersService;
 import com.example.demo.models.Bid;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
@@ -26,6 +27,9 @@ public class BidderController {
     @Autowired
     BidRepository bidRepository;
 
+    @Autowired
+    NotifyBiddersService notifyBiddersService;
+
     @GetMapping("")
     public String index() {
         return "test";
@@ -36,10 +40,12 @@ public class BidderController {
         Bid newBid = new Bid();
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         Item currentItem = itemRepository.findById(id).get();
-        newBid.setItem(currentItem);
+       // newBid.setItem(currentItem);
         newBid.setDate(new Date());
         newBid.setUser(loggedInUser);
         newBid.setPrice(placedBid.getPrice());
+
+
 
         Integer highestBid = 0;
         for (Bid tempBid : bidRepository.findAllByItemOrderByPrice(currentItem)) {
@@ -58,8 +64,9 @@ public class BidderController {
                 model.addAttribute("loggedin",loggedInUser);
                 return "genericmessage";
             }
-            loggedInUser.addBid(newBid);
-            userRepository.save(loggedInUser);
+            currentItem.addBid(newBid);
+            itemRepository.save(currentItem);
+            currentItem.addObserver(notifyBiddersService);
         }
         else {
             model.addAttribute("message", "The auction is over.");
