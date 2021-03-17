@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Timer;
 import java.util.TimerTask;
 
-@Service
+@Component
 public class EndAuctionTimer {
 
     @Autowired
