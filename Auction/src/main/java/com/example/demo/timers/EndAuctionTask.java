@@ -17,6 +17,8 @@ public class EndAuctionTask extends TimerTask {
     private Item item;
     private Connection connection;
 
+    //ANVÄNDS EJ
+
     @Override
     public void run() {
             item.setEnabled(0);
@@ -50,4 +52,6 @@ public class EndAuctionTask extends TimerTask {
     public void setItem(Item item) {
         this.item = item;
     }
+
+
 }
