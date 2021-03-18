@@ -6,15 +6,14 @@ import com.example.demo.models.User;
 import com.example.demo.repositories.BidRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
+
 import com.example.demo.service.NotifyBiddersService;
-import com.example.demo.service.testObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 

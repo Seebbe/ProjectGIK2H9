@@ -191,6 +191,7 @@ public class Item extends Observable {
                 ", endTime=" + endTime +
                 ", enabled=" + enabled +
                 ", picture='" + picture + '\'' +
+                ", bids=" + bids +
                 ", category=" + category +
                 ", user=" + user +
                 '}';

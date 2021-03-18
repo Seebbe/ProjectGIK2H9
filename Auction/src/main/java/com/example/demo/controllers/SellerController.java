@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 
-import com.example.demo.Service.SendNotficationService;
+
 import com.example.demo.models.Category;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
@@ -9,6 +9,7 @@ import com.example.demo.repositories.BidRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.service.SendNotficationService;
 import com.example.demo.timers.EndAuctionTimer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ public class SellerController {
     BidRepository bidRepository;
     @Autowired
     SendNotficationService sendNotficationService;
+
 
     @GetMapping("/add")
     public String home(Model model){

@@ -125,4 +125,15 @@ public class User {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", enabled=" + enabled +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
