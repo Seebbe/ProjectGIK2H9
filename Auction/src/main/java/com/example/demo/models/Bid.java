@@ -91,6 +91,7 @@ public class Bid {
                 "id=" + id +
                 ", price=" + price +
                 ", date=" + date +
+                ", user=" + user +
                 '}';
     }
 }

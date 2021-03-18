@@ -95,14 +95,14 @@ public class SellerController {
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         loggedInUser.addItem(item);
         if (!endtime.contains("")) {
-            
+            //
         }
         item = itemRepository.save(item);
 
         //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
         //endTime har gått ut
-        //System.out.println(item);
         endAuctionTimer.startTimer(item);
+        //skicka bekräftelse till säljaren att objektet är utlagt
          sendNotficationService.sendEmailNotification(loggedInUser.getEmail(),"Item",item.getName() + "has been added with the starting price" + item.getStartingBid());
 
         return "redirect:/seller/add";

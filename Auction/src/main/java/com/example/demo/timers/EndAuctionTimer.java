@@ -53,7 +53,7 @@ public class EndAuctionTimer {
                     System.out.println("Mail: " + highestBid.getUser().getEmail());
 
                     //JavaMailSender här som skickar mail till vinnaren (om det finns någon)
-                    String emailBodyText = String.format("Hello %s! You won the auction with item %s with the winning bid %o SEK. \nThere were %o bidders. Please pay. \nYours sincerely, The Auction company",
+                    String emailBodyText = String.format("Hello %s! You won the auction with item %s with the winning bid %d SEK. \nThere were %o bids. Please pay. \nYours sincerely, The Auction company",
                             highestBid.getUser().getName(), savedEndedAuctionItem.getName(), highestBid.getPrice(), bids.size());
                     sendNotficationService.sendEmailNotification(highestBid.getUser().getEmail(), "You've won! auction: " + savedEndedAuctionItem.getName(), emailBodyText);
                 } else {
