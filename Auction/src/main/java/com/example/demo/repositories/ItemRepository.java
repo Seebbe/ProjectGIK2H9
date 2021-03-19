@@ -35,4 +35,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     @Query("Select i from Item i WHERE i.category.id = ?1")
     List<Item> findAllItemsByCategory(int id);
+
+    List<Item> findAllByUser(User user);
 }

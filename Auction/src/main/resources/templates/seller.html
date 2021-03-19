@@ -38,6 +38,7 @@
                 </form>
             </div>
             </div>
+            <span th:if="${items.isEmpty()}" class="alert-danger p-1">You have no items</span>
             <div class="col-sm-4" th:each="i: ${items}">
                 <div class="card mb-4" style="width: 20rem;">
                     <img th:src="${i.picture}" class="card-img-top mb-5" alt="...">

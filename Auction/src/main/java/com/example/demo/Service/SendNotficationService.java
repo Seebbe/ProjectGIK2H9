@@ -12,7 +12,7 @@ public class SendNotficationService {
     public void sendEmailNotification(String to, String subject, String text) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom("hejtestt@gmail.com");
-        simpleMailMessage.setTo("massus.hdu@gmail.com");
+        simpleMailMessage.setTo(to);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(text);
         javaMailSender.send(simpleMailMessage);

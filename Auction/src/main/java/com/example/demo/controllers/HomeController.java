@@ -7,6 +7,7 @@ import com.example.demo.repositories.BidRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.timers.EndAuctionTimer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -31,16 +32,19 @@ public class HomeController {
     CategoryRepository categoryRepository;
     @Autowired
     private BidRepository bidRepository;
+    @Autowired
+    EndAuctionTimer endAuctionTimer;
 
     @EventListener(ApplicationReadyEvent.class)
     public void runOnStart() {
         //Skapar upp användare
         User u1 = new User("Adminsson", "admin@admin.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Cool snubbe", "ROLE_ADMIN",1);
-        User u2 = new User("En säljare", "seller@user.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Säljer som smör", "ROLE_USER",1);
-        User u3 = new User("En budare", "bidder@user2.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Han köper allt", "ROLE_USER",1);
+        User u2 = new User("Sebbe", "hassehasse300@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Säljer som smör", "ROLE_USER",1);
+        User u3 = new User("Marcus", "massus.hda@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Han köper allt", "ROLE_USER",1);
+        User u4 = new User("Kevin", "kevin@hansmail.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Gillar det mesta", "ROLE_USER",1);
         userRepository.save(u1);
         Item a4 = new Item("bb", "Vill någon köpa mä?", 25, new Date(), 1, "https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-
+        userRepository.save(u4);
         userRepository.save(u3);
         Category c1 = new Category("Teknik", "Allting om teknik");
         Category c2 = new Category("Bilar", "Allting om bilar");
@@ -55,6 +59,43 @@ public class HomeController {
         a4.setCategory(c1);
         u2.addItem(a4);
         userRepository.save(u2);
+
+
+        Item a1 = new Item("aa","awdawdadawdawdadada",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
+        Item a2 = new Item("bb","bbbbbbbbbbbbbbbb",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
+        Item a3 = new Item("bb","aaaaaaaaaaaaaaaaaa",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
+
+        a1.setCategory(c2);
+        a2.setCategory(c2);
+        a3.setCategory(c2);
+        a4.setCategory(c2);
+
+        //ändrar datumet till ett datum som gått ut
+        a4.setEndTime(Calendar.getInstance().getTime());
+        Calendar cNow = Calendar.getInstance();
+        //addera 2 dagar till dagens datum
+        cNow.add(Calendar.DATE, 2);
+        a1.setEndTime(cNow.getTime());
+        a2.setEndTime(cNow.getTime());
+        a3.setEndTime(cNow.getTime());
+        a4.setEndTime(cNow.getTime());
+
+        u2.addItem(a1);
+        itemRepository.save(a1);
+        u2.addItem(a2);
+        itemRepository.save(a2);
+        u2.addItem(a3);
+        itemRepository.save(a3);
+        u2.addItem(a4);
+        itemRepository.save(a4);
+
+        //timers
+        endAuctionTimer.startTimer(a1);
+        endAuctionTimer.startTimer(a2);
+        endAuctionTimer.startTimer(a3);
+        endAuctionTimer.startTimer(a4);
+
+
     }
 
     @GetMapping("/")
@@ -93,34 +134,7 @@ public class HomeController {
         model.addAttribute("hasPrevious", pagedResult.hasPrevious());
         model.addAttribute("showingNrOfPosts", PAGESIZE);
 
-        //lägger till lite grejä
-        Category category = categoryRepository.findByTitle("Teknik");
-        Category category1 = categoryRepository.findByTitle("Bilar");
-        Item a1 = new Item("aa","awdawdadawdawdadada",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        Item a2 = new Item("bb","bbbbbbbbbbbbbbbb",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        Item a3 = new Item("bb","aaaaaaaaaaaaaaaaaa",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        Item a4 = new Item("bb","Vill någon köpa mä?",25,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
 
-        category.addItem(a1);
-        category1.addItem(a2);
-        category.addItem(a3);
-        category.addItem(a4);
-
-        //ändrar datumet till ett datum som gått ut
-        a4.setEndTime(Calendar.getInstance().getTime());
-
-        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
-        System.out.println(loggedInUser);
-
-        loggedInUser.addItem(a1);
-        itemRepository.save(a1);
-        loggedInUser.addItem(a2);
-        itemRepository.save(a2);
-        loggedInUser.addItem(a3);
-        itemRepository.save(a3);
-        loggedInUser.addItem(a4);
-        itemRepository.save(a4);
-        model.addAttribute("loggedin",loggedInUser);
         model.addAttribute("currentCategory", new Category("All items", ""));
         model.addAttribute("totalPagesPairDisplay", totalPagesPairDisplay.entrySet());
         model.addAttribute("items",items);
