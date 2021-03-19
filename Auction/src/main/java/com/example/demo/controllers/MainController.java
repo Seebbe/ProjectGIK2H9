@@ -15,11 +15,6 @@ public class MainController {
         } else {
             userName = "-";
         }
-        System.out.println(userName);
-
-
-        //hårdkodar en user som returneras
-        //userName = "seller@user.com";
 
         return userName;
     }

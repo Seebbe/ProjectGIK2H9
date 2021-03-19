@@ -41,7 +41,7 @@ public class HomeController {
         User u1 = new User("Adminsson", "admin@admin.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Cool snubbe", "ROLE_ADMIN",1);
         User u2 = new User("Sebbe", "hassehasse300@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Säljer som smör", "ROLE_USER",1);
         User u3 = new User("Marcus", "massus.hda@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Han köper allt", "ROLE_USER",1);
-        User u4 = new User("Kevin", "kevin@hansmail.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Gillar det mesta", "ROLE_USER",1);
+        User u4 = new User("Kevin", "mailtest023123@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Gillar det mesta", "ROLE_USER",1);
         userRepository.save(u1);
         Item a4 = new Item("bb", "Vill någon köpa mä?", 25, new Date(), 1, "https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
         userRepository.save(u4);

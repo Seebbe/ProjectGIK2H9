@@ -13,12 +13,8 @@ public class NotifyBiddersService implements Observer {
     @Override
     public void update(Observable o, Object arg) {
 
-        //budet som kommer in: 
+        //budet som kommer in:
         Bid bid = (Bid)arg;
         System.out.println(bid);
-        System.out.println(arg);
-
-
-        System.out.println("ej");
     }
 }
