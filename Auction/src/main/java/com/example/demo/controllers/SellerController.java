@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 
-import com.example.demo.Service.SendNotficationService;
+
 import com.example.demo.models.Category;
 import com.example.demo.models.Item;
 import com.example.demo.models.User;
@@ -9,6 +9,7 @@ import com.example.demo.repositories.BidRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ItemRepository;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.service.SendNotficationService;
 import com.example.demo.timers.EndAuctionTimer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ public class SellerController {
     BidRepository bidRepository;
     @Autowired
     SendNotficationService sendNotficationService;
+
 
     @GetMapping("/add")
     public String home(Model model){
@@ -94,14 +96,14 @@ public class SellerController {
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
         loggedInUser.addItem(item);
         if (!endtime.contains("")) {
-            
+            //
         }
         item = itemRepository.save(item);
 
         //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
         //endTime har gått ut
-        //System.out.println(item);
         endAuctionTimer.startTimer(item);
+        //skicka bekräftelse till säljaren att objektet är utlagt
          sendNotficationService.sendEmailNotification(loggedInUser.getEmail(),"Item",item.getName() + "has been added with the starting price" + item.getStartingBid());
 
         return "redirect:/seller/add";

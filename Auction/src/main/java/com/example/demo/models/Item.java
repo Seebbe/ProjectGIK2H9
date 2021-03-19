@@ -57,9 +57,12 @@ public class Item extends Observable {
         this.name=name;
         this.description=description;
         this.startingBid=startingBid;
-        //addera 2 dagar till dagens datum
+
         Calendar cNow = Calendar.getInstance();
-        cNow.add(Calendar.DATE, 2);
+        //addera 2 dagar till dagens datum
+        //cNow.add(Calendar.DATE, 2);
+        //addera 1 minut till endTime
+        cNow.add(Calendar.MINUTE, 1);
         this.endTime=cNow.getTime();
         this.enabled=enabled;
         this.picture=picture;
@@ -191,6 +194,7 @@ public class Item extends Observable {
                 ", endTime=" + endTime +
                 ", enabled=" + enabled +
                 ", picture='" + picture + '\'' +
+                ", bids=" + bids +
                 ", category=" + category +
                 ", user=" + user +
                 '}';

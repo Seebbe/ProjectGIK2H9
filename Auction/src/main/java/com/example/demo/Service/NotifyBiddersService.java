@@ -1,6 +1,4 @@
-package com.example.demo.Service;
-
-
+package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +10,9 @@ public class NotifyBiddersService implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        System.out.println(arg);
+
+
         System.out.println("ej");
     }
 }

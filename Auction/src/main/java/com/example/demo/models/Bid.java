@@ -41,7 +41,7 @@ public class Bid {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -92,7 +92,6 @@ public class Bid {
                 ", price=" + price +
                 ", date=" + date +
                 ", user=" + user +
-                ", item=" + item +
                 '}';
     }
 }
