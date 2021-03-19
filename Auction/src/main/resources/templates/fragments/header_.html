@@ -21,7 +21,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="/seller/add/">Sälj</a>
                     </li>
-                    <li class="nav-item"th:if="${loggedin.role} =='ROLE_ADMIN'">
+                    <li class="nav-item"th:if="${globalLoggedInUser.role} =='ROLE_ADMIN'">
                         <a class="nav-link text-light" href="/admin/">Admin sida</a>
                     </li>
                 </ul>
