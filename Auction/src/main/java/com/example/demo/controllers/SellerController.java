@@ -74,6 +74,7 @@ public class SellerController {
         categoryRepository.save(c4);*/
         model.addAttribute("items",itemRepository.findAll());
         model.addAttribute("category",categoryRepository.findAll());
+        model.addAttribute("loggedin",loggedInUser);
         return "seller";
     }
 
@@ -143,7 +144,7 @@ public class SellerController {
         //aktivera timern som utför ändring av enable till 0 och skickar mail till vinnaren om det finns en när
         //endTime har gått ut
         endAuctionTimer.startTimer(item2);
-
+        model.addAttribute("loggedin",loggedInUser);
         model.addAttribute("item", itemRepository.findById(item.getId()).get());
         model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(item));
         return "singleitem";

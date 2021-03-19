@@ -33,7 +33,7 @@ public class AdminController {
         model.addAttribute("admin", loggedInUser);
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-
+        model.addAttribute("loggedin",loggedInUser);
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
 

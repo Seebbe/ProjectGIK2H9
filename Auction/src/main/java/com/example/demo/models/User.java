@@ -45,12 +45,13 @@ public class User {
     public User(){
 
     }
-    public User(String name,String email,String password,String description,String role){
+    public User(String name,String email,String password,String description,String role,int enable){
         this.name = name;
         this.email = email;
         this.password = password;
         this.description = description;
         this.role=role;
+        this.enabled=enable;
     }
 
     public Integer getId() {

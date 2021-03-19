@@ -35,9 +35,9 @@ public class HomeController {
     @EventListener(ApplicationReadyEvent.class)
     public void runOnStart() {
         //Skapar upp användare
-        User u1 = new User("Adminsson", "admin@admin.se", "$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe", "Cool snubbe", "ROLE_ADMIN");
-        User u2 = new User("En säljare", "seller@user.com", "$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe", "Säljer som smör", "ROLE_SELLER");
-        User u3 = new User("En budare", "bidder@user2.com", "$2y$12$2tYyMIWKcov.yX/9TSmzcenjngVGK4UAQZ4AAIobRIiSsbbo7CLOe", "Han köper allt", "ROLE_BIDDER");
+        User u1 = new User("Adminsson", "admin@admin.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Cool snubbe", "ROLE_ADMIN",1);
+        User u2 = new User("En säljare", "seller@user.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Säljer som smör", "ROLE_USER",1);
+        User u3 = new User("En budare", "bidder@user2.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Han köper allt", "ROLE_USER",1);
         userRepository.save(u1);
         Item a4 = new Item("bb", "Vill någon köpa mä?", 25, new Date(), 1, "https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
 
@@ -59,7 +59,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String redirectIndex() {
-        return "redirect:allitems?page=0";
+
+        return "redirect:/allitems?page=0";
     }
 
     @GetMapping("/allitems")
@@ -109,6 +110,7 @@ public class HomeController {
         a4.setEndTime(Calendar.getInstance().getTime());
 
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
+        System.out.println(loggedInUser);
 
         loggedInUser.addItem(a1);
         itemRepository.save(a1);
@@ -118,7 +120,7 @@ public class HomeController {
         itemRepository.save(a3);
         loggedInUser.addItem(a4);
         itemRepository.save(a4);
-
+        model.addAttribute("loggedin",loggedInUser);
         model.addAttribute("currentCategory", new Category("All items", ""));
         model.addAttribute("totalPagesPairDisplay", totalPagesPairDisplay.entrySet());
         model.addAttribute("items",items);
@@ -167,6 +169,8 @@ public class HomeController {
         System.out.println(itemRepository.findAllByCategory(catTemp));
 
          */
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
+        model.addAttribute("loggedin",loggedInUser);
         model.addAttribute("currentCategory", categoryRepository.findById(id).get());
         model.addAttribute("items",itemRepository.findAllItemsByCategory(id));
         model.addAttribute("category",categoryRepository.findAll());
@@ -196,7 +200,8 @@ public class HomeController {
         itemRepository.save(item);
 
         */
-
+        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
+        model.addAttribute("loggedin",loggedInUser);
         model.addAttribute("item", itemRepository.findById(id).get());
         model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(item));
         return "singleitem";

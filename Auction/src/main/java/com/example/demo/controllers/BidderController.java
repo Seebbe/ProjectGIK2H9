@@ -39,6 +39,7 @@ public class BidderController {
     public String layBid(Model model, @RequestParam(name = "id") Integer id, @ModelAttribute Bid placedBid) {
         Bid newBid = new Bid();
         User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
+        model.addAttribute("loggedin",loggedInUser);
         Item currentItem = itemRepository.findById(id).get();
        // newBid.setItem(currentItem);
         newBid.setDate(new Date());
@@ -56,6 +57,7 @@ public class BidderController {
             if (placedBid.getPrice() < currentItem.getStartingBid()) {
                 model.addAttribute("message", "You can't place bid lower than the starting bid.");
                 model.addAttribute("loggedin",loggedInUser);
+
                 return "genericmessage";
             }
 
