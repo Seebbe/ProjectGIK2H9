@@ -7,6 +7,7 @@ import com.example.demo.repositories.ItemRepository;
 import com.example.demo.service.NotifyBiddersService;
 import com.example.demo.service.SendNotficationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import java.util.TimerTask;
 
 import static java.util.Comparator.comparing;
 
-@Repository
+@Component
 public class EndAuctionTimer {
 
     @Autowired

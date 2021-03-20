@@ -29,11 +29,8 @@ public class AdminController {
     //Hämtar alla items/users till adminsidan
     @GetMapping("")
     public String index(Model model,@RequestParam(required = false) Integer id) {
-        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
-        model.addAttribute("admin", loggedInUser);
         List<Item> items = itemRepository.findAll();
         model.addAttribute("items", items);
-        model.addAttribute("loggedin",loggedInUser);
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
 
@@ -42,7 +39,6 @@ public class AdminController {
 
         return "admin";
     }
-
 
     //Delete sektion
     @GetMapping(value = "/deleteItem/{id}")

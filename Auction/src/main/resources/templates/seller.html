@@ -48,7 +48,7 @@
                         <p class="card-title" th:text="'Created by: '+${i.user.email}">Card title</p>
                         <p class="card-text" th:text="${i.category.title}"></p>
                         <p class="card-text" th:text="${i.description}"></p>
-                        <p class="card-text" th:text="'Avslutas: ' + ${i.getFormattedDate}"></p>
+                        <p class="card-text" th:text="'Ends: ' + ${i.getFormattedDate}"></p>
                         <span th:if="${i.auctionHasEnded}" class="alert-danger p-1">Auction has ended</span>
                         <span th:unless="${i.auctionHasEnded}" class="alert-success p-1">Auction is active</span>
                         <p class="card-text" th:text="'Starting Price: '+${i.startingBid}"></p>

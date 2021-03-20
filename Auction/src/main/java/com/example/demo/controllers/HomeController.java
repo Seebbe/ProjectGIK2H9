@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 @Controller
@@ -36,66 +41,86 @@ public class HomeController {
     EndAuctionTimer endAuctionTimer;
 
     @EventListener(ApplicationReadyEvent.class)
-    public void runOnStart() {
+    public void runOnStart() throws IOException {
         //Skapar upp användare
-        User u1 = new User("Adminsson", "admin@admin.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Cool snubbe", "ROLE_ADMIN",1);
-        User u2 = new User("Sebbe", "hassehasse300@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Säljer som smör", "ROLE_USER",1);
-        User u3 = new User("Marcus", "massus.hda@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Han köper allt", "ROLE_USER",1);
-        User u4 = new User("Kevin", "mailtest023123@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Gillar det mesta", "ROLE_USER",1);
+        User u1 = new User("Adminsson", "admin@admin.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Cool admin", "ROLE_ADMIN",1);
+        User u2 = new User("Sebbe", "hassehasse300@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "I do this for a living", "ROLE_USER",1);
+        User u3 = new User("Marcus", "massus.hdu@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Like to buy stuff", "ROLE_USER",1);
+        User u4 = new User("Kevin", "mailtest023123@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "A student who likes to buy stuff", "ROLE_USER",1);
         userRepository.save(u1);
-        Item a4 = new Item("bb", "Vill någon köpa mä?", 25, new Date(), 1, "https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
         userRepository.save(u4);
         userRepository.save(u3);
-        Category c1 = new Category("Teknik", "Allting om teknik");
-        Category c2 = new Category("Bilar", "Allting om bilar");
-        Category c3 = new Category("Hem", "Allting om hem");
-        Category c4 = new Category("Hobby", "Allting om hobby");
+        userRepository.save(u2);
+        Category c1 = new Category("Electronic", "Everything about electronics");
+        Category c2 = new Category("Cars", "Everything about cars");
+        Category c3 = new Category("House", "Everything to your house ");
+        Category c4 = new Category("Hobbie", "All hobbies");
         categoryRepository.save(c1);
         categoryRepository.save(c2);
         categoryRepository.save(c3);
         categoryRepository.save(c4);
         //PASSWORD = 123
         //return "test";
-        a4.setCategory(c1);
-        u2.addItem(a4);
-        userRepository.save(u2);
 
-
-        Item a1 = new Item("aa","awdawdadawdawdadada",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        Item a2 = new Item("bb","bbbbbbbbbbbbbbbb",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        Item a3 = new Item("bb","aaaaaaaaaaaaaaaaaa",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-
-        a1.setCategory(c2);
-        a2.setCategory(c2);
-        a3.setCategory(c2);
+        //skapar upp ett item där utgångsdatumet redan nåtts
+        Item a4 = new Item("bb", "Vill någon köpa mä?", 25, new Date(), 1, "https://picsum.photos/id/1/200");
         a4.setCategory(c2);
-
         //ändrar datumet till ett datum som gått ut
         a4.setEndTime(Calendar.getInstance().getTime());
         Calendar cNow = Calendar.getInstance();
-        //addera 2 dagar till dagens datum
-        cNow.add(Calendar.DATE, 2);
-        a1.setEndTime(cNow.getTime());
-        a2.setEndTime(cNow.getTime());
-        a3.setEndTime(cNow.getTime());
-        a4.setEndTime(cNow.getTime());
-
-        u2.addItem(a1);
-        itemRepository.save(a1);
-        u2.addItem(a2);
-        itemRepository.save(a2);
-        u2.addItem(a3);
-        itemRepository.save(a3);
         u2.addItem(a4);
         itemRepository.save(a4);
-
-        //timers
-        endAuctionTimer.startTimer(a1);
-        endAuctionTimer.startTimer(a2);
-        endAuctionTimer.startTimer(a3);
+        //timer
         endAuctionTimer.startTimer(a4);
 
 
+        //skapar upp önskat antal auktioner knutna till en användare
+        //med utgångsdatum 2 dagar från nu
+        List<Category> allCategories = categoryRepository.findAll();
+        String imageUrl = "";
+        String itemName;
+        final int NROFCREATEDITEMS = 100;
+        int randomPrice;
+        //int nrOfSplits = NROFCREATEDITEMS / allCategories.size();
+        int nrOfItemsInEachSplit = NROFCREATEDITEMS / allCategories.size();
+        for (int i = 1; i < NROFCREATEDITEMS; i++) {
+           randomPrice =  new Random().nextInt(1500);
+            //varje item får en egen bild från picsum
+           imageUrl = "https://picsum.photos/id/" + i + "/200";
+           itemName = "Cool item " + i;
+           Item tempItem = new Item(itemName,"More information about cool product " + i,randomPrice ,new Date(),1,imageUrl);
+            //addera 2 dagar till dagens datum
+            cNow.add(Calendar.DATE, 2);
+            tempItem.setEndTime(cNow.getTime());
+            //varje kategori får lika många items
+            if(i < nrOfItemsInEachSplit) {
+                tempItem.setCategory(c1);
+                u2.addItem(tempItem);
+                itemRepository.save(tempItem);
+            }
+            //varje kategori får lika många items
+            if(i > nrOfItemsInEachSplit && i < nrOfItemsInEachSplit * 2) {
+                tempItem.setCategory(c2);
+                u2.addItem(tempItem);
+                itemRepository.save(tempItem);
+            }
+
+            //varje kategori får lika många items
+            if(i > nrOfItemsInEachSplit * 2) {
+                tempItem.setCategory(c3);
+                u2.addItem(tempItem);
+                itemRepository.save(tempItem);
+            }
+
+            //varje kategori får lika många items
+            if(i > nrOfItemsInEachSplit * 3) {
+                tempItem.setCategory(c4);
+                u2.addItem(tempItem);
+                itemRepository.save(tempItem);
+            }
+            //starta timern för objektets utgångsdatum
+            endAuctionTimer.startTimer(tempItem);
+        }
     }
 
     @GetMapping("/")
@@ -145,46 +170,6 @@ public class HomeController {
 
     @GetMapping("/home/{id}")
     public String findByCategory(Model model,@PathVariable Integer id) {
-
-        /*Category category = categoryRepository.findByTitle("Teknik");
-        Item a1 = new Item("aa","awdawdadawdawdadada",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        Item a2 = new Item("bb","bbbbbbbbbbbbbbbb",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        Item a3 = new Item("bb","aaaaaaaaaaaaaaaaaa",20,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-        Item a4 = new Item("bb","Vill någon köpa mä?",25,new Date(),1,"https://i1.adis.ws/i/canon/EOS-r5_Martin_Bissig_Lifestyle_hero-e90f9dd2-be19-11ea-b23c-8c04ba195b5f?w=100%&sm=aspect&aspect=16:9&qlt=80&fmt=jpg&fmt.options=interlaced&bg=rgb(255,255,255)");
-
-        category.addItem(a1);
-        category.addItem(a2);
-        category.addItem(a3);
-        category.addItem(a4);
-
-        //ändrar datumet till ett datum som gått ut
-        a4.setEndTime(Calendar.getInstance().getTime());
-
-
-        loggedInUser.addItem(a1);
-        itemRepository.save(a1);
-        loggedInUser.addItem(a2);
-        itemRepository.save(a2);
-        loggedInUser.addItem(a3);
-        itemRepository.save(a3);
-        loggedInUser.addItem(a4);
-        itemRepository.save(a4);*/
-       /* Category c1 = new Category("Teknik","Allting om teknik");
-        Category c2 = new Category("Bilar","Allting om bilar");
-        Category c3 = new Category("Hem","Allting om hem");
-        Category c4 = new Category("Hobby","Allting om hobby");
-        categoryRepository.save(c1);
-        categoryRepository.save(c2);
-        categoryRepository.save(c3);
-        categoryRepository.save(c4);*/
-        //List<Item> items = (List<Item>) itemRepository.findByCategoryId(id);
-
-        /*Category catTemp = categoryRepository.findById(id).get();
-        System.out.println(itemRepository.findAllByCategory(catTemp));
-
-         */
-        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
-        model.addAttribute("loggedin",loggedInUser);
         model.addAttribute("currentCategory", categoryRepository.findById(id).get());
         model.addAttribute("items",itemRepository.findAllItemsByCategory(id));
         model.addAttribute("category",categoryRepository.findAll());
@@ -200,22 +185,8 @@ public class HomeController {
     //Singelsida för ett auktionsobjekt
     @GetMapping("/auctionitem")
     public String getSingleItemPage(Model model, @RequestParam(name = "id") Integer id) {
-        //hårdkodar in 4 bud
-        User user = userRepository.findByEmail(MainController.getLoggedInUser());
         Item item = itemRepository.findById(id).get();
-       /* Bid bid1 = new Bid(26, new Date(), user, item);
-        Bid bid2 = new Bid(55, new Date(), user, item);
-        Bid bid3 = new Bid(56, new Date(), user, item);
-        Bid bid4 = new Bid(57, new Date(), user, item);
-        item.addBid(bid1);
-        item.addBid(bid2);
-        item.addBid(bid3);
-        item.addBid(bid4);
-        itemRepository.save(item);
 
-        */
-        User loggedInUser = userRepository.findByEmail(MainController.getLoggedInUser());
-        model.addAttribute("loggedin",loggedInUser);
         model.addAttribute("item", itemRepository.findById(id).get());
         model.addAttribute("top3bids", bidRepository.findTop3ByItemOrderByPriceDesc(item));
         return "singleitem";

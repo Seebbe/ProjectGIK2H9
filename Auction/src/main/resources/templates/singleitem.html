@@ -25,7 +25,7 @@
 
                         <h5 class="card-title" th:text="${item.name}">Card title</h5>
                         <p class="card-text" th:text="${item.description}"></p>
-                        <p class="card-text" th:text="'Avslutas: ' + ${item.getFormattedDate}"></p>
+                        <p class="card-text" th:text="'Ends: ' + ${item.getFormattedDate}"></p>
                         <span th:if="${item.auctionHasEnded}" class="alert-danger p-1">Auction has ended</span>
                         <span th:unless="${item.auctionHasEnded}" class="alert-success p-1">Auction is active</span>
                         <p class="card-text" th:text="'Starting Price: '+${item.startingBid} + ' SEK'"></p>
