@@ -55,10 +55,12 @@ public class HomeController {
         Category c2 = new Category("Cars", "Everything about cars");
         Category c3 = new Category("House", "Everything to your house ");
         Category c4 = new Category("Hobbie", "All hobbies");
+        Category c5 = new Category("Sports", "You must stay fit brow");
         categoryRepository.save(c1);
         categoryRepository.save(c2);
         categoryRepository.save(c3);
         categoryRepository.save(c4);
+        categoryRepository.save(c5);
         //PASSWORD = 123
         //return "test";
 
@@ -73,53 +75,39 @@ public class HomeController {
         //timer
         endAuctionTimer.startTimer(a4);
 
-
         //skapar upp önskat antal auktioner knutna till en användare
         //med utgångsdatum 2 dagar från nu
         List<Category> allCategories = categoryRepository.findAll();
         String imageUrl = "";
         String itemName;
-        final int NROFCREATEDITEMS = 100;
+        final int NROFCREATEDITEMS = 20;
         int randomPrice;
+        int addedItems = 0;
+        int categoryId = 0;
         //int nrOfSplits = NROFCREATEDITEMS / allCategories.size();
         int nrOfItemsInEachSplit = NROFCREATEDITEMS / allCategories.size();
-        for (int i = 1; i < NROFCREATEDITEMS; i++) {
+        for (int i = 1; i <= NROFCREATEDITEMS; i++) {
            randomPrice =  new Random().nextInt(1500);
             //varje item får en egen bild från picsum
            imageUrl = "https://picsum.photos/id/" + i + "/200";
            itemName = "Cool item " + i;
-           Item tempItem = new Item(itemName,"More information about cool product " + i,randomPrice ,new Date(),1,imageUrl);
+           Item tempItem = new Item(itemName,"More information about cool " + allCategories.get(categoryId).getTitle() + " product " + i,randomPrice ,new Date(),1,imageUrl);
             //addera 2 dagar till dagens datum
             cNow.add(Calendar.DATE, 2);
             tempItem.setEndTime(cNow.getTime());
-            //varje kategori får lika många items
-            if(i < nrOfItemsInEachSplit) {
-                tempItem.setCategory(c1);
-                u2.addItem(tempItem);
-                itemRepository.save(tempItem);
-            }
-            //varje kategori får lika många items
-            if(i > nrOfItemsInEachSplit && i < nrOfItemsInEachSplit * 2) {
-                tempItem.setCategory(c2);
-                u2.addItem(tempItem);
-                itemRepository.save(tempItem);
-            }
-
-            //varje kategori får lika många items
-            if(i > nrOfItemsInEachSplit * 2) {
-                tempItem.setCategory(c3);
-                u2.addItem(tempItem);
-                itemRepository.save(tempItem);
-            }
-
-            //varje kategori får lika många items
-            if(i > nrOfItemsInEachSplit * 3) {
-                tempItem.setCategory(c4);
-                u2.addItem(tempItem);
-                itemRepository.save(tempItem);
-            }
+            tempItem.setCategory(allCategories.get(categoryId));
+            u2.addItem(tempItem);
+            itemRepository.save(tempItem);
             //starta timern för objektets utgångsdatum
             endAuctionTimer.startTimer(tempItem);
+            addedItems++;
+
+            //varje kategori får lika många items
+            //ändra kategori efter önskat antal items i varje kategori
+            if (addedItems == nrOfItemsInEachSplit && categoryId < allCategories.size() - 1) {
+                categoryId++;
+                addedItems = 0;
+            }
         }
     }
 
