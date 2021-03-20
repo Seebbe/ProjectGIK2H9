@@ -80,7 +80,7 @@ public class HomeController {
         List<Category> allCategories = categoryRepository.findAll();
         String imageUrl = "";
         String itemName;
-        final int NROFCREATEDITEMS = 20;
+        final int NROFCREATEDITEMS = 100;
         int randomPrice;
         int addedItems = 0;
         int categoryId = 0;
