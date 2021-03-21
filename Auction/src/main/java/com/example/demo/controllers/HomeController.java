@@ -43,7 +43,7 @@ public class HomeController {
     @EventListener(ApplicationReadyEvent.class)
     public void runOnStart() throws IOException {
         //Skapar upp användare
-        User u1 = new User("Adminsson", "admin@admin.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Cool admin", "ROLE_ADMIN",1);
+        User u1 = new User("Omar", "admin@admin.se", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Cool admin", "ROLE_ADMIN",1);
         User u2 = new User("Sebbe", "hassehasse300@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "I do this for a living", "ROLE_USER",1);
         User u3 = new User("Marcus", "massus.hdu@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "Like to buy stuff", "ROLE_USER",1);
         User u4 = new User("Kevin", "mailtest023123@gmail.com", "$2y$12$6whe.3786xhMmCuwWJj.mevsUru0EbCBVoFZswRbGNkQ/A5sEU3EW", "A student who likes to buy stuff", "ROLE_USER",1);
@@ -65,7 +65,7 @@ public class HomeController {
         //return "test";
 
         //skapar upp ett item där utgångsdatumet redan nåtts
-        Item a4 = new Item("bb", "Vill någon köpa mä?", 25, new Date(), 1, "https://picsum.photos/id/1/200");
+        Item a4 = new Item("bb", "Vill någon köpa mä?", 25, new Date(), 1, "https://picsum.photos/id/121/200");
         a4.setCategory(c2);
         //ändrar datumet till ett datum som gått ut
         a4.setEndTime(Calendar.getInstance().getTime());

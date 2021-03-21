@@ -40,7 +40,6 @@ public class EndAuctionTimer {
                 //ändra enable till 0 och spara till DB
                 savedEndedAuctionItem.setEnabled(0);
                 System.out.println(savedEndedAuctionItem.getName() + " ändrad! Enabled: " + savedEndedAuctionItem.getEnabled());
-                //System.out.println(bidRepository.findAllByItemOrderByPrice(item));
                 savedEndedAuctionItem = itemRepository.save(savedEndedAuctionItem);
                 bids = bidRepository.findAllByItemOrderByPrice(item);
 
@@ -53,7 +52,7 @@ public class EndAuctionTimer {
                     System.out.println("We have a winner: " + highestBid.getUser().getName());
                     System.out.println("Mail: " + highestBid.getUser().getEmail());
 
-                    //JavaMailSender här som skickar mail till vinnaren (om det finns någon)
+                    //JavaMailSender här som skickar mail till vinnaren
                     String emailBodyText = String.format("Hello %s! You won the auction with item %s with the winning bid %d SEK. \nThere were %o bids. Please pay. \nYours sincerely, The Auction company",
                             highestBid.getUser().getName(), savedEndedAuctionItem.getName(), highestBid.getPrice(), bids.size());
                     sendNotficationService.sendEmailNotification(highestBid.getUser().getEmail(), "You've won! auction: " + savedEndedAuctionItem.getName(), emailBodyText);
